@@ -1,0 +1,72 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+
+    <string name="app_name">故事地图</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_main22">Main22Activity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title_activity_daohang">DaohangActivity</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_laod">LaodActivity</string>
+    <string name="title_activity_zhuce">ZhuceActivity</string>
+    <string name="title_activity_xiugai">XiugaiActivity</string>
+    <string name="title_activity_wangji">wangjiActivity</string>
+    <string name="title_item_list">Items</string>
+    <string name="title_item_detail">Item Detail</string>
+    <string name="title_activity_yonghu">yonghuActivity</string>
+    <string name="title_activity_xiangqing">XiangqingActivity</string>
+    <string name="title_activity_riji">RijiActivity</string>
+    <string name="title_activity_youji">youjiActivity</string>
+    <string name="title_activity_scrolling">ScrollingActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_scrolling2">Scrolling2Activity</string>
+    <string name="title_activity_tab">tabActivity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_tabb">tabbActivity</string>
+    <string name="title_activity_youjixiangqing">youjixiangqingActivity</string>
+    <string name="title_activity_rijixiangqing">rijixiangqingActivity</string>
+    <string name="title_activity_dt">DtActivity</string>
+    <string name="title_activity_tabriji">TabrijiActivity</string>
+    <string name="title_activity_ttabriji">ttabrijiActivity</string>
+    <string name="title_activity_tabxiaoxi">tabxiaoxiActivity</string>
+    <string name="title_activity_woderiji">woderijiActivity</string>
+    <string name="title_activity_wodeyouji">wodeyoujiActivity</string>
+    <string name="title_activity_scrollingyouji">ScrollingyoujiActivity</string>
+    <string name="title_activity_tuijian">tuijianActivity</string>
+    <string name="title_activity_tongzhi">tongzhiActivity</string>
+    <string name="title_activity_tabtaren">TabtarenActivity</string>
+    <string name="title_activity_guanzhubeiguanzhu">guanzhubeiguanzhuActivity</string>
+    <string name="title_activity_beiguanzhu">beiguanzhuActivity</string>
+    <string name="title_activity_tarenxiangqing">TarenxiangqingActivity</string>
+    <string name="title_activity_dt2">Dt2Activity</string>
+    <string name="title_activity_pinglunwo">pinglunwoActivity</string>
+    <string name="title_activity_zanwo">zanwoActivity</string>
+    <string name="title_activity_tarenyouriji">tarenyourijiActivity</string>
+    <string name="title_activity_guanzhuyouriji">guanzhuyourijiActivity</string>
+    <string name="title_activity_weiguanzhuyouriji">weiguanzhuyourijiActivity</string>
+    <string name="title_activity_tarenriji">tarenrijiActivity</string>
+    <string name="title_activity_guanzhuriji">guanzhurijiActivity</string>
+    <string name="title_activity_weiguanzhuriji">weiguanzhurijiActivity</string>
+    <string name="title_activity_web">webActivity</string>
+    <string name="title_activity_jianyifangui">jianyifanguiActivity</string>
+    <string name="title_activity_card">cardActivity</string>
+    <string name="title_activity_set">SetActivity</string>
+    <string name="title_activity_webh5">Webh5Activity</string>
+
+
+    <string name="error_network">搜索失败,请检查网络连接！</string>
+    <string name="error_other">未知错误，请稍后重试!错误码为</string>
+    <string name="no_result">对不起，没有搜索到相关数据！</string>
+    <string name="error_key">key验证无效！</string>
+    <string name="errcode_success">发送成功</string>
+    <string name="errcode_cancel">发送取消</string>
+    <string name="errcode_deny">发送被拒绝</string>
+    <string name="errcode_unknown">发送返回</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_my_news">My_newsActivity</string>
+
+</resources>

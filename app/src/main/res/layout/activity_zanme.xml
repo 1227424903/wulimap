@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <include layout="@layout/content_zanme" />
+
+    <com.andexert.library.RippleView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fab"
+        app:rv_centered="true"
+        app:rv_framerate="60"
+        app:rv_alpha="200"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true">
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/fab_margin"
+            android:src="@drawable/button_fab_more"
+            app:rippleColor="@color/white"
+            app:backgroundTint="@color/colorPrimary"
+            app:borderWidth="0dp" />
+    </com.andexert.library.RippleView>
+</RelativeLayout>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/QQ"
+        android:icon="@drawable/more_icon_qq"
+        android:title="QQ好友" />
+    <item
+        android:id="@+id/QQZONE"
+        android:icon="@drawable/more_icon_qzone"
+        android:title="QQ空间" />
+    <item
+        android:id="@+id/WEIXIN"
+        android:icon="@drawable/more_weixin"
+        android:title="微信好友" />
+    <item
+        android:id="@+id/PENGYOUQUAN"
+        android:icon="@drawable/more_circlefriends"
+        android:title="朋友圈" />
+
+</menu>

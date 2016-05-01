@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/gray">
+
+    <LinearLayout
+        android:layout_margin="5dp"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="2dp"
+                android:layout_width="35dp"
+                android:layout_height="40dp"
+                android:background="@drawable/app_icon" />
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_marginTop="3dp"
+                android:layout_marginLeft="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/pinglunnicheng"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="肖幕"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/pinglunshujian"
+                    android:textSize="14sp"
+                    android:layout_marginTop="1dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2015.7.23" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_marginLeft="4dp"
+            android:id="@+id/pinglunneirong"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="1dp"
+            android:textSize="15sp"
+            android:text="你啊觉得肯定会" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

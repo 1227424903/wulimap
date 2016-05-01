@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/bulu"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.map.wulimap.Activity.RijiCircleActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/bulu">
+
+            <com.andexert.library.RippleView
+                android:id="@+id/fanhui"
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="?attr/actionBarSize"
+                app:rv_centered="true"
+                app:rv_framerate="60"
+                app:rv_alpha="200">
+
+                <ImageButton
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/button_left_fanhui" />
+            </com.andexert.library.RippleView>
+
+
+            <LinearLayout
+                android:background="@drawable/yuanjiao_white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="8dp">
+
+                <LinearLayout
+                    android:layout_margin="1dp"
+                    android:background="@drawable/yuanjiao_bule"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:background="@drawable/yuanjiao_white"
+                        android:layout_margin="1dp"
+                        android:layout_width="150dp"
+                        android:layout_height="36dp"
+                        android:id="@+id/bt3"
+                        android:text="日记圈"
+                        android:textColor="@color/bulu"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <com.andexert.library.RippleView
+                android:id="@+id/kapian"
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                app:rv_centered="true"
+                app:rv_framerate="60"
+                app:rv_alpha="200">
+
+                <TextView
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/white"
+                    android:text="卡片"
+                    android:textSize="16sp"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </com.andexert.library.RippleView>
+
+
+        </RelativeLayout>
+
+
+    </android.support.design.widget.AppBarLayout>
+
+    <include layout="@layout/content_riji_circle" />
+
+    <com.andexert.library.RippleView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/fab"
+        app:rv_centered="true"
+        app:rv_framerate="60"
+        app:rv_alpha="200"
+        android:layout_gravity="bottom|end">
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/fab_margin"
+            android:src="@drawable/button_fab_more"
+            app:rippleColor="@color/white"
+            app:backgroundTint="@color/colorPrimary"
+            app:borderWidth="0dp" />
+    </com.andexert.library.RippleView>
+
+</android.support.design.widget.CoordinatorLayout>
