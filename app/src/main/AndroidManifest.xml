@@ -3,27 +3,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.map.wulimap">
 
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!-- 允许程序打开网络套接字权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 保持屏幕常亮所需权限 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!-- 读取手机联系人信息所需权限 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <!-- 向SD卡写入文件所需权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 读取SD卡状态所需权限 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!-- 读取或更改系统设置 所需权限 -->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <!-- 手机震动所需权限 -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- 创建和删除文件所需权限 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <!-- 查询网络状态的权限 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 调用系统窗口所需权限 -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <!-- 用户定位所需权限 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+    <!-- 相机的权限 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!-- 允许程序修改全局音频设置 比如说：存储位置 -->
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <!-- 录制语音权限 -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@drawable/app_icon_white_big"
         android:label="@string/app_name"
@@ -58,11 +78,11 @@
         <!-- 友盟 -->
         <service
             android:name="com.umeng.update.net.DownloadingService"
-            android:process=":DownloadingService"></service>
+            android:process=":DownloadingService" />
 
         <activity
             android:name="com.umeng.update.UpdateDialogActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <meta-data
             android:name="UMENG_APPKEY"
@@ -72,7 +92,7 @@
             android:value="Channel ID" />
 
         <!-- 地图 -->
-        <service android:name="com.amap.api.location.APSService"></service>
+        <service android:name="com.amap.api.location.APSService" />
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
@@ -106,6 +126,25 @@
             </intent-filter>
         </activity>
 
+        <!-- im -->
+        <!--会话界面-->
+        <activity
+            android:name=".Activity.ConversationActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="com.map.wulimap"
+                    android:pathPrefix="/conversation/"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
+
         <!-- 广播 -->
         <receiver android:name=".Activity.HomeActivity$myreceive">
             <intent-filter>
@@ -126,23 +165,23 @@
         <activity
             android:name=".Activity.WelcomeActivity"
             android:label="@string/title_activity_main2"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.HomeActivity"
             android:label="@string/title_activity_main22"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.SearchPositionActivity"
             android:label="@string/title_activity_daohang"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.LoginActivity"
             android:label="@string/title_activity_laod"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.RegisterActivity"
             android:label="@string/title_activity_zhuce"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.ChangePasswprdActivity"
             android:label="@string/title_activity_xiugai"
@@ -156,115 +195,91 @@
         <activity
             android:name=".Activity.FindPasswordActivity"
             android:label="@string/title_activity_wangji"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
-            android:name=".Activity.MyHomeActivity"
-            android:label="@string/title_activity_yonghu"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.MyAccountActivity"
             android:label="@string/title_activity_xiangqing"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.Write_rijiActivity"
             android:label="@string/title_activity_riji"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.Write_youjiActivity"
             android:label="@string/title_activity_youji"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.MyRijiDetailActivity"
             android:label="@string/title_activity_scrolling2"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.YoujiDetailActivity"
             android:label="@string/title_activity_youjixiangqing"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.RijiDetailActivity"
             android:label="@string/title_activity_rijixiangqing"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.MapActivity"
             android:label="@string/title_activity_dt"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.My_rijiActivity"
             android:label="@string/title_activity_woderiji"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.My_youjiActivity"
             android:label="@string/title_activity_wodeyouji"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.MyYoujiDetailActivity"
             android:label="@string/title_activity_scrollingyouji"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
-            android:name=".Activity.PopActivity"
-            android:label="@string/title_activity_tuijian"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.NoticeActivity"
             android:label="@string/title_activity_tongzhi"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.My_FocusActivity"
             android:label="@string/title_activity_guanzhubeiguanzhu"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.FocusOnMeActivity"
             android:label="@string/title_activity_beiguanzhu"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.SearchFriendActivity"
             android:label="sousutianjia"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.FriendAcountActivity"
             android:label="@string/title_activity_tarenxiangqing"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.GoMapActivity"
             android:label="@string/title_activity_dt2"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
-            android:name=".Activity.CommentOnMeActivity"
-            android:label="@string/title_activity_pinglunwo"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
-            android:name=".Activity.ZanMeActivity"
-            android:label="@string/title_activity_zanwo"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.Friend_youjiActivity"
             android:label="@string/title_activity_tarenyouriji"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
-            android:name=".Activity.Foucs_youjiActivity"
-            android:label="@string/title_activity_guanzhuyouriji"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.YoujiCircleActivity"
             android:label="@string/title_activity_weiguanzhuyouriji"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.Friend_rijiActivity"
             android:label="@string/title_activity_tarenriji"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
-            android:name=".Activity.Foucs_rijiActivity"
-            android:label="@string/title_activity_guanzhuriji"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.RijiCircleActivity"
             android:label="@string/title_activity_weiguanzhuriji"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.WebActivity"
             android:label="@string/title_activity_web"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.SuggestActivity"
             android:label="@string/title_activity_jianyifangui"
@@ -278,19 +293,20 @@
         <activity
             android:name=".Activity.CardActivity"
             android:label="@string/title_activity_card"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.SetActivity"
             android:label="@string/title_activity_set"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.Webh5Activity"
             android:label="@string/title_activity_webh5"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity.My_newsActivity"
             android:label="@string/title_activity_my_news"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+
     </application>
 
 </manifest>

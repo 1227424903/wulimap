@@ -1,5 +1,7 @@
 package com.map.wulimap.Activity;
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -7,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -17,11 +20,21 @@ import com.map.wulimap.util.DownloadUtil;
 import com.map.wulimap.util.FileUtil;
 import com.map.wulimap.util.HtmlService;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.URLEncoder;
+
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
+
 
 public class MainActivity extends AppCompatActivity {
     //初始化变量
-    ImageView imageView;
-    String a = "";
+    private ImageView imageView;
+    private String getjieguo1;
+
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
 
@@ -56,8 +69,8 @@ public class MainActivity extends AppCompatActivity {
         new Thread() {
             public void run() {
                 try {
-                    a = HtmlService.getHtml("http://wode123123.sinaapp.com/10.php");
-                    a = a.trim();
+                    getjieguo1 = HtmlService.getHtml("http://wode123123.sinaapp.com/10.php");
+                    getjieguo1 = getjieguo1.trim();
                 } catch (Exception e) {
                 }
                 handler.sendEmptyMessageDelayed(2, 50);
@@ -91,14 +104,14 @@ public class MainActivity extends AppCompatActivity {
                     editor = preferences.edit();
                     int qd = preferences.getInt("qd", 0);
                     String fm = preferences.getString("fm", null);
-                    if (a.equals(fm)) {
+                    if (getjieguo1.equals(fm)) {
                     } else {
                         if (!FileUtil.wenjianshifoucunzai("/sdcard/map")) {
                             FileUtil.chuanjianmulu("/sdcard/map");
                         }
                         DownloadUtil down = new DownloadUtil();
-                        down.downloadApk("qidong.jpg", "http://1.wode123123.sinaapp.com/photo/" + a + ".jpg", "/sdcard/map/");
-                        editor.putString("fm", a);
+                        down.downloadApk("qidong.jpg", "http://1.wode123123.sinaapp.com/photo/" + getjieguo1 + ".jpg", "/sdcard/map/");
+                        editor.putString("fm", getjieguo1);
                         editor.commit();
                     }
 
@@ -116,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
 
         ;
     };
+
 
 }
 

@@ -16,6 +16,7 @@ import android.widget.EditText;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.andexert.library.RippleView;
 import com.map.wulimap.R;
+import com.map.wulimap.util.GetRoundedBitmapUtil;
 import com.map.wulimap.util.HtmlService;
 import com.map.wulimap.util.ToastUtil;
 
@@ -38,6 +39,7 @@ public class RegisterActivity extends AppCompatActivity {
     String querenmima;
     String anquanyouxiang;
     String nicheng;
+    String userid;
 
 
     @Override
@@ -45,6 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_register);
 
+        userid = GetRoundedBitmapUtil.getRandomCode();
         initsetting();
         initview();
 
@@ -123,7 +126,7 @@ public class RegisterActivity extends AppCompatActivity {
                                                     new Thread() {
                                                         public void run() {
                                                             try {
-                                                                HtmlService.getHtml("http://wode123123.sinaapp.com/gushiditu/zhuce.php?shoujihao=" + shoujihao + "&nicheng=" + nicheng + "&mima=" + mima + "&anquanyouxiang=" + anquanyouxiang + "&icon=0&guanzhushou=0&beiguanzhushou=0&youjishu=0&rijishou=0");
+                                                                HtmlService.getHtml("http://wode123123.sinaapp.com/gushiditu/zhuce.php?shoujihao=" + shoujihao + "&nicheng=" + nicheng + "&mima=" + mima + "&anquanyouxiang=" + anquanyouxiang + "&userid=" + userid + "&icon=0&guanzhushou=0&beiguanzhushou=0&youjishu=0&rijishou=0");
                                                             } catch (Exception e) {
                                                             }
 

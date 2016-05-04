@@ -114,10 +114,9 @@ public class NoticeActivity extends AppCompatActivity {
         }, 1500);
 
 //加载更多
-        final RippleView rippleView3 = (RippleView) findViewById(R.id.fab);
-        rippleView3.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+        swipeRefreshLayout.setOnLoadListener(new RefreshLayout.OnLoadListener() {
             @Override
-            public void onComplete(RippleView rippleView) {
+            public void onLoad() {
                 ////加载更多操作
                 swipeRefreshLayout.post(new Runnable() {
                     public void run() {
@@ -126,14 +125,16 @@ public class NoticeActivity extends AppCompatActivity {
                 });
                 swipeRefreshLayout.postDelayed(new Runnable() {
                     public void run() {
+                        swipeRefreshLayout.setLoading(false);
                         swipeRefreshLayout.setRefreshing(false);
                     }
                 }, 1500);
                 LongTimeOperationTask1 task = new LongTimeOperationTask1();
                 task.execute();
-            }
 
+            }
         });
+
 
     }
 

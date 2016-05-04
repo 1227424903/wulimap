@@ -45,4 +45,5 @@ dependencies {
         transitive = true
     }
     compile 'com.kyleduo.switchbutton:library:1.4.0'
+    compile project(':IMKit')
 }

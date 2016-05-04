@@ -166,6 +166,7 @@ public class SearchFriendActivity extends AppCompatActivity implements Recogniti
                                             SharedPreferences sharedPreferences = getSharedPreferences("tarenzhanghu", MODE_PRIVATE);
                                             SharedPreferences.Editor editor = sharedPreferences.edit();
                                             editor.putString("shoujihao", jiegou);
+                                            editor.putString("userid", jsonObject.getString("userid"));
                                             editor.putString("youjishu", jsonObject.getString("youjishu"));
                                             editor.putString("rijishu", jsonObject.getString("rijishu"));
                                             editor.putString("nicheng", jsonObject.getString("nicheng"));
@@ -209,6 +210,7 @@ public class SearchFriendActivity extends AppCompatActivity implements Recogniti
                                             SharedPreferences sharedPreferences = getSharedPreferences("tarenzhanghu", MODE_PRIVATE);
                                             SharedPreferences.Editor editor = sharedPreferences.edit();
                                             editor.putString("shoujihao", "");
+                                            editor.putString("userid", jsonObject.getString("userid"));
                                             editor.putString("youjishu", jsonObject.getString("youjishu"));
                                             editor.putString("rijishu", jsonObject.getString("rijishu"));
                                             editor.putString("nicheng", jsonObject.getString("nicheng"));
@@ -248,7 +250,8 @@ public class SearchFriendActivity extends AppCompatActivity implements Recogniti
                     editor1.putInt("shuliang", 0);
                     shuliang = 0;
                     editor1.commit();
-                    //  listView.setVisibility(View.GONE);
+                    listView.removeAllViews();
+                    // listView.setVisibility(View.GONE);
                 }
 
 
@@ -299,6 +302,7 @@ public class SearchFriendActivity extends AppCompatActivity implements Recogniti
                                             SharedPreferences sharedPreferences = getSharedPreferences("tarenzhanghu", MODE_PRIVATE);
                                             SharedPreferences.Editor editor = sharedPreferences.edit();
                                             editor.putString("shoujihao", jiegou);
+                                            editor.putString("userid", jsonObject.getString("userid"));
                                             editor.putString("youjishu", jsonObject.getString("youjishu"));
                                             editor.putString("rijishu", jsonObject.getString("rijishu"));
                                             editor.putString("nicheng", jsonObject.getString("nicheng"));
@@ -346,6 +350,7 @@ public class SearchFriendActivity extends AppCompatActivity implements Recogniti
                                             SharedPreferences sharedPreferences = getSharedPreferences("tarenzhanghu", MODE_PRIVATE);
                                             SharedPreferences.Editor editor = sharedPreferences.edit();
                                             editor.putString("shoujihao", "");
+                                            editor.putString("userid", jsonObject.getString("userid"));
                                             editor.putString("youjishu", jsonObject.getString("youjishu"));
                                             editor.putString("rijishu", jsonObject.getString("rijishu"));
                                             editor.putString("nicheng", jsonObject.getString("nicheng"));

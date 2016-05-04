@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -27,6 +28,8 @@ import org.json.JSONObject;
 
 import java.net.URLEncoder;
 
+import io.rong.imkit.RongIM;
+
 
 public class FriendAcountActivity extends AppCompatActivity {
     MaterialDialog progDialog;
@@ -38,6 +41,7 @@ public class FriendAcountActivity extends AppCompatActivity {
     Boolean shifouguanzhu = false;
     String nicheng11;
     String nichengg;
+    String userid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +76,7 @@ public class FriendAcountActivity extends AppCompatActivity {
         String beiguanzhushu = sharedPreferences.getString("beiguanzhushu", null);
         String youjishu = sharedPreferences.getString("youjishu", null);
         String rijishu = sharedPreferences.getString("rijishu", null);
+        userid = sharedPreferences.getString("userid", null);
         shoujihao = sharedPreferences.getString("shoujihao", null);
 //返回按钮
         final RippleView rippleView1 = (RippleView) findViewById(R.id.fanhui);
@@ -107,6 +112,7 @@ public class FriendAcountActivity extends AppCompatActivity {
         textView8.setText(beiguanzhushu);
         button = (Button) findViewById(R.id.guanzhu);
 
+
 //日记
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.riji);
         linearLayout.setOnClickListener(new View.OnClickListener() {
@@ -125,10 +131,10 @@ public class FriendAcountActivity extends AppCompatActivity {
         });
 
 //关注
-        final RippleView rippleView3 = (RippleView) findViewById(R.id.fab);
-        rippleView3.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+        Button guanzhu = (Button) findViewById(R.id.guanzhu);
+        guanzhu.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onComplete(RippleView rippleView) {
+            public void onClick(View view) {
                 new Thread() {
                     @Override
                     public void run() {
@@ -161,6 +167,22 @@ public class FriendAcountActivity extends AppCompatActivity {
                         }
                     }
                 }.start();
+            }
+        });
+
+
+        //发送消息
+        final RippleView rippleView3 = (RippleView) findViewById(R.id.fab);
+        rippleView3.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+            @Override
+            public void onComplete(RippleView rippleView) {
+
+                if (RongIM.getInstance() != null) {
+
+                    RongIM.getInstance().startPrivateChat(FriendAcountActivity.this, userid, nicheng);
+                } else {
+                    FriendAcountActivity.this.startActivity(new Intent(FriendAcountActivity.this, ConversationActivity.class));
+                }
             }
 
         });

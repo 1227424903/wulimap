@@ -40,11 +40,9 @@ import com.map.wulimap.view.RefreshLayout;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.OnDismissCallback;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.SwipeDismissAdapter;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.net.URLEncoder;
 
 public class PopFragment extends Fragment implements OnDismissCallback {
@@ -188,11 +186,10 @@ public class PopFragment extends Fragment implements OnDismissCallback {
                 swipeRefreshLayout.setRefreshing(false);
             }
         }, 1500);
-//加载更多
-        final RippleView rippleView3 = (RippleView) view.findViewById(R.id.fab);
-        rippleView3.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+
+        swipeRefreshLayout.setOnLoadListener(new RefreshLayout.OnLoadListener() {
             @Override
-            public void onComplete(RippleView rippleView) {
+            public void onLoad() {
                 ////加载更多操作
                 swipeRefreshLayout.post(new Runnable() {
                     public void run() {
@@ -201,14 +198,17 @@ public class PopFragment extends Fragment implements OnDismissCallback {
                 });
                 swipeRefreshLayout.postDelayed(new Runnable() {
                     public void run() {
+                        swipeRefreshLayout.setLoading(false);
                         swipeRefreshLayout.setRefreshing(false);
                     }
                 }, 1500);
                 LongTimeOperationTask1 task = new LongTimeOperationTask1();
                 task.execute();
-            }
 
+            }
         });
+
+
     }
 
 

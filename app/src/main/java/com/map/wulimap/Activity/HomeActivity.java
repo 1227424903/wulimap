@@ -1,6 +1,7 @@
 package com.map.wulimap.Activity;
 
 
+import android.app.ActivityManager;
 import android.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -12,6 +13,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -26,8 +28,18 @@ import com.map.wulimap.Fragment.PopFragment;
 import com.map.wulimap.Fragment.RijiFragment;
 import com.map.wulimap.Fragment.YoujiFragment;
 import com.map.wulimap.R;
+import com.map.wulimap.util.HtmlService;
 import com.map.wulimap.util.ToastUtil;
 import com.umeng.update.UmengUpdateAgent;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.URLEncoder;
+
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, PopFragment.OnFragmentInteractionListener, YoujiFragment.OnFragmentInteractionListener, RijiFragment.OnFragmentInteractionListener, HomeFragment.OnFragmentInteractionListener {
@@ -39,8 +51,13 @@ public class HomeActivity extends AppCompatActivity
     //  Fragment
     Fragment fragment;
     static private DrawerLayout drawer;
-
     private String mima;
+
+    private String userid;
+    private String nicheng;
+    private String getjieguo;
+    private String token;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +66,8 @@ public class HomeActivity extends AppCompatActivity
 
         initdate();
         initsetting();
+
         initview();
-
-
     }
 
 
@@ -85,10 +101,16 @@ public class HomeActivity extends AppCompatActivity
 
 
     public void initdate() {
-
 //获取信息
         SharedPreferences sharedPreferences = getSharedPreferences("zhanghu", MODE_PRIVATE);
         mima = sharedPreferences.getString("mima", null);
+        userid = sharedPreferences.getString("userid", null);
+        nicheng = sharedPreferences.getString("nicheng", null);
+        new Thread() {
+            public void run() {
+                inittoken();
+            }
+        }.start();
     }
 
 
@@ -286,5 +308,103 @@ public class HomeActivity extends AppCompatActivity
         mBut4.setImageResource(R.drawable.icon_home_2);
         linearLayouthome.setEnabled(false);
     }
+
+
+    public void inittoken() {
+        new Thread() {
+            public void run() {
+                try {
+                    //url编码
+                    try {
+                        nicheng = URLEncoder.encode(nicheng, "utf-8");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    getjieguo = HtmlService.getHtml("http://wode123123.sinaapp.com/gushiditu/gettoken.php?shoujihao=" + userid + "&nicheng=" + nicheng);
+                } catch (Exception e) {
+                }
+                //删首尾空
+                getjieguo = getjieguo.trim();
+                Log.e("uri", getjieguo);
+                //网络问题
+                if (!(getjieguo == null || getjieguo == "")) {
+                    token = getjieguo.substring(43);
+                    token = token.substring(0, 96);
+                    Log.e("uri", token);
+
+                    connect(token);
+                }
+
+            }
+        }.start();
+
+    }
+
+
+    /**
+     * 建立与融云服务器的连接
+     *
+     * @param token
+     */
+    private void connect(String token) {
+        if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext()))) {
+            /**
+             * IMKit SDK调用第二步,建立与服务器的连接
+             */
+            RongIM.connect(token, new RongIMClient.ConnectCallback() {
+                /**
+                 * Token 错误，在线上环境下主要是因为 Token 已经过期，您需要向 App Server 重新请求一个新的 Token
+                 */
+                @Override
+                public void onTokenIncorrect() {
+                    Log.e("uri", "--onTokenIncorrect");
+                }
+
+                /**
+                 * 连接融云成功
+                 * @param userid 当前 token
+                 */
+                @Override
+                public void onSuccess(String userid) {
+                    Log.e("uri", "--onSuccess" + userid);
+                    // startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    // finish();
+                }
+
+                /**
+                 * 连接融云失败
+                 * @param errorCode 错误码，可到官网 查看错误码对应的注释
+                 */
+                @Override
+                public void onError(RongIMClient.ErrorCode errorCode) {
+                    Log.e("uri", "--onError" + errorCode);
+                }
+            });
+        }
+    }
+
+    /**
+     * 获得当前进程的名字
+     *
+     * @param context
+     * @return 进程号
+     */
+    public static String getCurProcessName(Context context) {
+        int pid = android.os.Process.myPid();
+        ActivityManager activityManager = (ActivityManager) context
+                .getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningAppProcessInfo appProcess : activityManager
+                .getRunningAppProcesses()) {
+            if (appProcess.pid == pid) {
+                return appProcess.processName;
+            }
+        }
+        return null;
+    }
+
+
+
+
+
 
 }

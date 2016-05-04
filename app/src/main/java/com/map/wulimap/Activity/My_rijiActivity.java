@@ -27,7 +27,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.andexert.library.RippleView;
 import com.map.wulimap.R;
@@ -35,20 +34,19 @@ import com.map.wulimap.util.DownloadUtil;
 import com.map.wulimap.util.HtmlService;
 import com.map.wulimap.util.ToastUtil;
 import com.map.wulimap.util.FileUtil;
+import com.map.wulimap.view.RefreshLayout;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.OnDismissCallback;
 import com.nhaarman.listviewanimations.itemmanipulation.swipedismiss.SwipeDismissAdapter;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.net.URLEncoder;
 
 
 public class My_rijiActivity extends AppCompatActivity implements OnDismissCallback {
     //初始化控件
-    SwipeRefreshLayout swipeRefreshLayout;
+    RefreshLayout swipeRefreshLayout;
     MaterialDialog progDialog;
     BaseAdapter baseAdapter;
     ListView listView;
@@ -95,7 +93,7 @@ public class My_rijiActivity extends AppCompatActivity implements OnDismissCallb
         });
 
         //下拉组件设置
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_layout);
+        swipeRefreshLayout = (RefreshLayout) findViewById(R.id.swipe_layout);
         swipeRefreshLayout.setSize(SwipeRefreshLayout.DEFAULT);
         // 设置下拉多少距离之后开始刷新数据
         swipeRefreshLayout.setDistanceToTriggerSync(100);
@@ -117,10 +115,9 @@ public class My_rijiActivity extends AppCompatActivity implements OnDismissCallb
             }
         }, 1500);
 //加载更多
-        final RippleView rippleView3 = (RippleView) findViewById(R.id.fab);
-        rippleView3.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+        swipeRefreshLayout.setOnLoadListener(new RefreshLayout.OnLoadListener() {
             @Override
-            public void onComplete(RippleView rippleView) {
+            public void onLoad() {
                 ////加载更多操作
                 swipeRefreshLayout.post(new Runnable() {
                     public void run() {
@@ -129,14 +126,16 @@ public class My_rijiActivity extends AppCompatActivity implements OnDismissCallb
                 });
                 swipeRefreshLayout.postDelayed(new Runnable() {
                     public void run() {
+                        swipeRefreshLayout.setLoading(false);
                         swipeRefreshLayout.setRefreshing(false);
                     }
                 }, 1500);
                 LongTimeOperationTask1 task = new LongTimeOperationTask1();
                 task.execute();
-            }
 
+            }
         });
+
 
 //下拉刷新监听
         swipeRefreshLayout.setOnRefreshListener(

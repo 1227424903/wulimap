@@ -120,6 +120,7 @@ public class LoginActivity extends AppCompatActivity {
                                                                 SharedPreferences sharedPreferences = getSharedPreferences("zhanghu", MODE_PRIVATE);
                                                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                                                 editor.putString("shoujihao", jsonObject.getString("shoujihao"));
+                                                                editor.putString("userid", jsonObject.getString("userid"));
                                                                 editor.putString("mima", jsonObject.getString("mima"));
                                                                 editor.putString("anquanyouxiang", jsonObject.getString("anquanyouxiang"));
                                                                 editor.putString("youjishu", jsonObject.getString("youjishu"));

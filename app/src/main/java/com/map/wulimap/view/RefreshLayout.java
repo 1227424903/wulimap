@@ -140,7 +140,7 @@ public class RefreshLayout extends SwipeRefreshLayout implements AbsListView.OnS
     private boolean isBottom() {
 
         if (mListView != null && mListView.getAdapter() != null) {
-            return mListView.getLastVisiblePosition() >= 7;
+            return mListView.getLastVisiblePosition() >= mListView.getCount() - 1;
         }
         return false;
     }
@@ -172,9 +172,9 @@ public class RefreshLayout extends SwipeRefreshLayout implements AbsListView.OnS
     public void setLoading(boolean loading) {
         isLoading = loading;
         if (isLoading) {
-            mListView.addFooterView(mListViewFooter);
+            // mListView.addFooterView(mListViewFooter);
         } else {
-            mListView.removeFooterView(mListViewFooter);
+            // mListView.removeFooterView(mListViewFooter);
             mYDown = 0;
             mLastY = 0;
         }

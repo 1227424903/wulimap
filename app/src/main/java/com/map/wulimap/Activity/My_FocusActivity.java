@@ -119,10 +119,9 @@ public class My_FocusActivity extends AppCompatActivity {
             }
         }, 1500);
 //加载更多
-        final RippleView rippleView3 = (RippleView) findViewById(R.id.fab);
-        rippleView3.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+        swipeRefreshLayout.setOnLoadListener(new RefreshLayout.OnLoadListener() {
             @Override
-            public void onComplete(RippleView rippleView) {
+            public void onLoad() {
                 ////加载更多操作
                 swipeRefreshLayout.post(new Runnable() {
                     public void run() {
@@ -131,14 +130,16 @@ public class My_FocusActivity extends AppCompatActivity {
                 });
                 swipeRefreshLayout.postDelayed(new Runnable() {
                     public void run() {
+                        swipeRefreshLayout.setLoading(false);
                         swipeRefreshLayout.setRefreshing(false);
                     }
                 }, 1500);
                 LongTimeOperationTask1 task = new LongTimeOperationTask1();
                 task.execute();
-            }
 
+            }
         });
+
     }
 
 
@@ -304,6 +305,7 @@ public class My_FocusActivity extends AppCompatActivity {
                                                 SharedPreferences sharedPreferences = getSharedPreferences("tarenzhanghu", MODE_PRIVATE);
                                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                                 editor.putString("shoujihao", "");
+                                                editor.putString("userid", jsonObject.getString("userid"));
                                                 editor.putString("youjishu", jsonObject.getString("youjishu"));
                                                 editor.putString("rijishu", jsonObject.getString("rijishu"));
                                                 editor.putString("nicheng", jsonObject.getString("nicheng"));
