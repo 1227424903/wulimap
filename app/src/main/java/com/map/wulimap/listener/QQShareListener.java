@@ -1,4 +1,4 @@
-package com.map.wulimap.QQshareListener;
+package com.map.wulimap.listener;
 
 import android.content.Context;
 
@@ -6,14 +6,11 @@ import com.map.wulimap.util.ToastUtil;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.UiError;
 
-/**
- * Created by Administrator on 2016/4/28.
- */
 //QQ分享监听
-public class ShareListener implements IUiListener {
+public class QQShareListener implements IUiListener {
     Context context1;
 
-    public ShareListener(Context context) {
+    public QQShareListener(Context context) {
         this.context1 = context;
     }
 
