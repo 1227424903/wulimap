@@ -21,7 +21,7 @@ import android.widget.TextView;
 
 import com.andexert.library.RippleView;
 import com.cocosw.bottomsheet.BottomSheet;
-import com.map.wulimap.QQshareListener.ShareListener;
+import com.map.wulimap.listener.QQShareListener;
 import com.map.wulimap.R;
 import com.map.wulimap.util.GetRoundedBitmapUtil;
 import com.map.wulimap.util.ToastUtil;
@@ -49,7 +49,7 @@ public class SuggestActivity extends AppCompatActivity {
     LinearLayout linearLayout1;
     BottomSheet sheet;
     Tencent mTencent;
-    ShareListener myListener;
+    QQShareListener myListener;
     IWXAPI wxApi;// 第三方app和微信通讯的openapi接口
 
     @Override
@@ -117,7 +117,7 @@ public class SuggestActivity extends AppCompatActivity {
         wxApi.registerApp(appid);
         //腾讯
         mTencent = Tencent.createInstance("1105170987", this.getApplicationContext());
-        myListener = new ShareListener(SuggestActivity.this);
+        myListener = new QQShareListener(SuggestActivity.this);
         final RippleView rippleView = (RippleView) findViewById(R.id.fenxiang);
         rippleView.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
             @Override
@@ -245,7 +245,7 @@ public class SuggestActivity extends AppCompatActivity {
 
     //分享回调
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        ShareListener myListener = new ShareListener(SuggestActivity.this);
+        QQShareListener myListener = new QQShareListener(SuggestActivity.this);
         Tencent.onActivityResultData(requestCode, resultCode, data, myListener);
     }
 

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -28,7 +29,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.andexert.library.RippleView;
 import com.cocosw.bottomsheet.BottomSheet;
-import com.map.wulimap.QQshareListener.ShareListener;
+import com.map.wulimap.listener.QQShareListener;
 import com.map.wulimap.R;
 import com.map.wulimap.util.FileUtil;
 import com.map.wulimap.util.GetRoundedBitmapUtil;
@@ -78,7 +79,7 @@ public class RijiDetailActivity extends AppCompatActivity {
     String pinglunneirong1;
     String pinglunneirong;
     Tencent mTencent;
-    ShareListener myListener;
+    QQShareListener myListener;
     Boolean shifouzan = false;
     //初始化控件
     LinearLayout linearLayout1;
@@ -240,6 +241,12 @@ public class RijiDetailActivity extends AppCompatActivity {
         if (FileUtil.wenjianshifoucunzai("/sdcard/map/" + tupian + "-yasuo.jpg")) {
             Bitmap bitmap = BitmapFactory.decodeFile("/sdcard/map/" + tupian + "-yasuo.jpg");
             imageView.setImageBitmap(bitmap);
+            //url编码
+            try {
+                tupianbianmaming = URLEncoder.encode(tupian, "utf-8");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } else {
             //url编码
             try {
@@ -255,24 +262,14 @@ public class RijiDetailActivity extends AppCompatActivity {
 //图片详情按钮
         imageView.setOnClickListener(new View.OnClickListener() { // 点击放大
             public void onClick(View paramView) {
-                View imgEntryView = (View) LayoutInflater.from(RijiDetailActivity.this)
-                        .inflate(R.layout.pop_photo_dialog, null);
+                Uri uri;
+                uri = Uri.parse("http://wode123123-test.stor.sinaapp.com/" + tupianbianmaming + "-yasuo.jpg");
+                Log.e("uri", uri.toString());
+                Intent intent = new Intent(RijiDetailActivity.this, PhotoActivity.class);
+                intent.putExtra("photo", uri);
+                intent.putExtra("thumbnail", uri);
+                RijiDetailActivity.this.startActivity(intent);
 
-                final AlertDialog dialog = new AlertDialog.Builder(RijiDetailActivity.this).create();
-                ImageView imageview = (ImageView) imgEntryView.findViewById(R.id.large_image);
-
-                if (FileUtil.wenjianshifoucunzai("/sdcard/map/" + tupian + "-yasuo.jpg")) {
-                    Bitmap bitmap = BitmapFactory.decodeFile("/sdcard/map/" + tupian + "-yasuo.jpg");
-                    imageview.setImageBitmap(bitmap);
-                }
-                dialog.setView(imgEntryView); // 自定义dialog
-                dialog.show();
-                // 点击布局文件（也可以理解为点击大图）后关闭dialog，这里的dialog不需要按钮
-                imgEntryView.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View paramView) {
-                        dialog.cancel();
-                    }
-                });
             }
         });
 
@@ -353,7 +350,7 @@ public class RijiDetailActivity extends AppCompatActivity {
         wxApi.registerApp(appid);
         //腾讯
         mTencent = Tencent.createInstance("1105170987", this.getApplicationContext());
-        myListener = new ShareListener(RijiDetailActivity.this);
+        myListener = new QQShareListener(RijiDetailActivity.this);
         ImageButton imageButton11 = (ImageButton) findViewById(R.id.fenxiang);
         imageButton11.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -674,7 +671,7 @@ public class RijiDetailActivity extends AppCompatActivity {
 
     //QQ分享回调
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        ShareListener myListener = new ShareListener(RijiDetailActivity.this);
+        QQShareListener myListener = new QQShareListener(RijiDetailActivity.this);
         Tencent.onActivityResultData(requestCode, resultCode, data, myListener);
     }
 

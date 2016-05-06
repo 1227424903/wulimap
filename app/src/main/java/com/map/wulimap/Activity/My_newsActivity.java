@@ -47,7 +47,7 @@ public class My_newsActivity extends AppCompatActivity implements CommentOnMeFra
         MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(getSupportFragmentManager(),
                 this);
         viewPager.setAdapter(adapter);
-
+        viewPager.setOffscreenPageLimit(3);
         //TabLayout
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);

@@ -241,8 +241,8 @@ public class SearchPositionActivity extends AppCompatActivity implements Recogni
                     editor.putInt("shuliang", 0);
                     shuliang = 0;
                     editor.commit();
-                    listView.removeAllViews();
-                    //  listView.setVisibility(View.GONE);
+                    // listView.removeAllViews();
+                    listView.setVisibility(View.GONE);
 
                 }
 

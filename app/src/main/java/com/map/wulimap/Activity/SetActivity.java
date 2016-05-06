@@ -16,6 +16,8 @@ import com.andexert.library.RippleView;
 import com.kyleduo.switchbutton.SwitchButton;
 import com.map.wulimap.R;
 
+import io.rong.imkit.RongIM;
+
 public class SetActivity extends AppCompatActivity {
     //初始化控件
     SwitchButton switchButton;
@@ -189,6 +191,38 @@ public class SetActivity extends AppCompatActivity {
             @Override
             public void onComplete(RippleView rippleView) {
                 SetActivity.this.startActivity(new Intent(SetActivity.this, SuggestActivity.class));
+            }
+
+        });
+
+
+        //聊天按钮
+        final RippleView rippleView6 = (RippleView) findViewById(R.id.chuangkou);
+        rippleView6.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+            @Override
+            public void onComplete(RippleView rippleView) {
+
+
+                if (RongIM.getInstance() != null) {
+
+                    RongIM.getInstance().startPrivateChat(SetActivity.this, "1111111111", "小木");
+                } else {
+                    SetActivity.this.startActivity(new Intent(SetActivity.this, ConversationActivity.class));
+                }
+
+
+                //   SetActivity.this.startActivity(new Intent(SetActivity.this, MoreActivity.class));
+            }
+
+        });
+
+
+        //关于按钮
+        final RippleView rippleView5 = (RippleView) findViewById(R.id.guanyu);
+        rippleView5.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+            @Override
+            public void onComplete(RippleView rippleView) {
+                SetActivity.this.startActivity(new Intent(SetActivity.this, MoreActivity.class));
             }
 
         });

@@ -3,6 +3,8 @@ package com.map.wulimap.Activity;
 
 import android.app.ActivityManager;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -28,6 +30,7 @@ import com.map.wulimap.Fragment.PopFragment;
 import com.map.wulimap.Fragment.RijiFragment;
 import com.map.wulimap.Fragment.YoujiFragment;
 import com.map.wulimap.R;
+import com.map.wulimap.listener.ConversationBehaviorListener;
 import com.map.wulimap.util.HtmlService;
 import com.map.wulimap.util.ToastUtil;
 import com.umeng.update.UmengUpdateAgent;
@@ -40,6 +43,7 @@ import java.net.URLEncoder;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.UserInfo;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, PopFragment.OnFragmentInteractionListener, YoujiFragment.OnFragmentInteractionListener, RijiFragment.OnFragmentInteractionListener, HomeFragment.OnFragmentInteractionListener {
@@ -49,7 +53,13 @@ public class HomeActivity extends AppCompatActivity
     TextView mCateText1, mCateText2, mCateText3, mCateText4;
     LinearLayout linearLayouttuijian, linearLayoutyouji, linearLayoutriji, linearLayouthome;
     //  Fragment
-    Fragment fragment;
+    Fragment popfragment;
+    Fragment Youjifragment;
+    Fragment Rijifragment;
+    Fragment Homefragment;
+    Fragment mContent;
+    FragmentManager fm;
+    ConversationBehaviorListener conversationBehaviorListener;
     static private DrawerLayout drawer;
     private String mima;
 
@@ -72,7 +82,6 @@ public class HomeActivity extends AppCompatActivity
 
 
     public void initview() {
-
 //初始化操作
         prepareView();
 
@@ -106,6 +115,8 @@ public class HomeActivity extends AppCompatActivity
         mima = sharedPreferences.getString("mima", null);
         userid = sharedPreferences.getString("userid", null);
         nicheng = sharedPreferences.getString("nicheng", null);
+
+        //融云初始化
         new Thread() {
             public void run() {
                 inittoken();
@@ -145,9 +156,14 @@ public class HomeActivity extends AppCompatActivity
         mCateText3 = (TextView) findViewById(R.id.textView3);
         mCateText4 = (TextView) findViewById(R.id.textView4);
 
-//初始framgment
-        fragment = PopFragment.newInstance(HomeActivity.this);
-        getFragmentManager().beginTransaction().replace(R.id.fragmentcontent, fragment).commit();
+        //初始framgment
+        popfragment = PopFragment.newInstance(HomeActivity.this);
+        Youjifragment = YoujiFragment.newInstance(HomeActivity.this);
+        Rijifragment = RijiFragment.newInstance(HomeActivity.this);
+        Homefragment = HomeFragment.newInstance(HomeActivity.this);
+        mContent = popfragment;
+        fm = getFragmentManager();
+        fm.beginTransaction().add(R.id.fragmentcontent, mContent, Integer.toString(0)).commit();
         icon1();
     }
 
@@ -159,23 +175,19 @@ public class HomeActivity extends AppCompatActivity
         switch (checkedId) {
             case R.id.tuijian:
                 icon1();
-                fragment = PopFragment.newInstance(HomeActivity.this);
-                getFragmentManager().beginTransaction().replace(R.id.fragmentcontent, fragment).commit();
+                switchContent(mContent, popfragment, 0);
                 break;
             case R.id.youji:
                 icon2();
-                fragment = YoujiFragment.newInstance(HomeActivity.this);
-                getFragmentManager().beginTransaction().replace(R.id.fragmentcontent, fragment).commit();
+                switchContent(mContent, Youjifragment, 1);
                 break;
             case R.id.rriji:
                 icon3();
-                fragment = RijiFragment.newInstance(HomeActivity.this);
-                getFragmentManager().beginTransaction().replace(R.id.fragmentcontent, fragment).commit();
+                switchContent(mContent, Rijifragment, 2);
                 break;
             case R.id.Zzhuye:
                 icon4();
-                fragment = HomeFragment.newInstance(HomeActivity.this);
-                getFragmentManager().beginTransaction().replace(R.id.fragmentcontent, fragment).commit();
+                switchContent(mContent, Homefragment, 3);
                 break;
             default:
                 break;
@@ -332,12 +344,12 @@ public class HomeActivity extends AppCompatActivity
                     token = token.substring(0, 96);
                     Log.e("uri", token);
 
+                    // 建立与融云服务器的连接
                     connect(token);
                 }
 
             }
         }.start();
-
     }
 
 
@@ -359,7 +371,6 @@ public class HomeActivity extends AppCompatActivity
                 public void onTokenIncorrect() {
                     Log.e("uri", "--onTokenIncorrect");
                 }
-
                 /**
                  * 连接融云成功
                  * @param userid 当前 token
@@ -367,8 +378,6 @@ public class HomeActivity extends AppCompatActivity
                 @Override
                 public void onSuccess(String userid) {
                     Log.e("uri", "--onSuccess" + userid);
-                    // startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                    // finish();
                 }
 
                 /**
@@ -381,7 +390,21 @@ public class HomeActivity extends AppCompatActivity
                 }
             });
         }
+
+
+        conversationBehaviorListener = new ConversationBehaviorListener();
+        RongIM.setConversationBehaviorListener(conversationBehaviorListener);
+
+
+        RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
+            @Override
+            public UserInfo getUserInfo(String userId) {
+                return findUserById(userId);
+
+            }
+        }, true);
     }
+
 
     /**
      * 获得当前进程的名字
@@ -403,8 +426,46 @@ public class HomeActivity extends AppCompatActivity
     }
 
 
+    //高效率且换frament
+    public void switchContent(Fragment from, Fragment to, int position) {
+        if (mContent != to) {
+            mContent = to;
+            FragmentTransaction transaction = fm.beginTransaction();
+            if (!to.isAdded()) { // 先判断是否被add过
+                transaction.hide(from)
+                        .add(R.id.fragmentcontent, to, Integer.toString(position)).commit(); // 隐藏当前的fragment，add下一个到Activity中
+            } else {
+                transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
+            }
+        }
+    }
 
 
-
+    //获取用户信息
+    public UserInfo findUserById(final String userId) {
+        String name = "未知";
+        String icon = "http://1.wode123123.sinaapp.com/photo/egl11.png";
+        try {
+            getjieguo = HtmlService.getHtml("http://wode123123.sinaapp.com/gushiditu/getuseinfo.php?userid=" + userId);
+        } catch (Exception e) {
+        }
+        //删首尾空
+        getjieguo = getjieguo.trim();
+        Log.e("uri", getjieguo);
+        //网络问题
+        if (!(getjieguo == null || getjieguo == "")) {
+            try {
+                JSONArray arr = new JSONArray(getjieguo);
+                JSONObject jsonObject;
+                jsonObject = (JSONObject) arr.get(0);
+                name = jsonObject.getString("nicheng");
+                Log.e("uri", name);
+                //icon=jsonObject.getString("icon");
+            } catch (JSONException ex) {
+            }
+        }
+        return new UserInfo(userId, name,
+                Uri.parse(icon));
+    }
 
 }

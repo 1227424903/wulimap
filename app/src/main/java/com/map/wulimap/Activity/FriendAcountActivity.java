@@ -76,6 +76,7 @@ public class FriendAcountActivity extends AppCompatActivity {
         String beiguanzhushu = sharedPreferences.getString("beiguanzhushu", null);
         String youjishu = sharedPreferences.getString("youjishu", null);
         String rijishu = sharedPreferences.getString("rijishu", null);
+        String from = sharedPreferences.getString("from", null);
         userid = sharedPreferences.getString("userid", null);
         shoujihao = sharedPreferences.getString("shoujihao", null);
 //返回按钮
@@ -171,21 +172,32 @@ public class FriendAcountActivity extends AppCompatActivity {
         });
 
 
-        //发送消息
-        final RippleView rippleView3 = (RippleView) findViewById(R.id.fab);
-        rippleView3.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
-            @Override
-            public void onComplete(RippleView rippleView) {
+        if ("liaotian".equals(from)) {
+            final RippleView rippleView3 = (RippleView) findViewById(R.id.fab);
+            rippleView3.setVisibility(View.GONE);
 
-                if (RongIM.getInstance() != null) {
 
-                    RongIM.getInstance().startPrivateChat(FriendAcountActivity.this, userid, nicheng);
-                } else {
-                    FriendAcountActivity.this.startActivity(new Intent(FriendAcountActivity.this, ConversationActivity.class));
-                }
+        } else {
+
+            //发送消息
+            final RippleView rippleView3 = (RippleView) findViewById(R.id.fab);
+            rippleView3.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+                @Override
+                public void onComplete(RippleView rippleView) {
+
+                    if (RongIM.getInstance() != null) {
+
+                        RongIM.getInstance().startPrivateChat(FriendAcountActivity.this, userid, nicheng);
+                    } else {
+                        FriendAcountActivity.this.startActivity(new Intent(FriendAcountActivity.this, ConversationActivity.class));
             }
+                }
 
-        });
+            });
+
+        }
+
+
 
 
     }

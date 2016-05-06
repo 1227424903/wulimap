@@ -22,7 +22,7 @@ public class RefreshLayout extends SwipeRefreshLayout implements AbsListView.OnS
      * 滑动到最下面时的上拉操作
      */
 
-    private int mTouchSlop;
+    private int mTouchSlop = 200;
     /**
      * listview实例
      */
@@ -108,12 +108,13 @@ public class RefreshLayout extends SwipeRefreshLayout implements AbsListView.OnS
                 break;
 
             case MotionEvent.ACTION_MOVE:
-                // 移动
                 mLastY = (int) event.getRawY();
                 break;
 
             case MotionEvent.ACTION_UP:
                 // 抬起
+
+                mLastY = (int) event.getRawY();
                 if (canLoad()) {
                     loadData();
                 }

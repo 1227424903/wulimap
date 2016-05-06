@@ -317,6 +317,7 @@ public class FocusOnMeActivity extends AppCompatActivity {
                                                 SharedPreferences sharedPreferences = getSharedPreferences("tarenzhanghu", MODE_PRIVATE);
                                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                                 editor.putString("shoujihao", "");
+                                                editor.putString("from", "pengyou");
                                                 editor.putString("userid", jsonObject.getString("userid"));
                                                 editor.putString("youjishu", jsonObject.getString("youjishu"));
                                                 editor.putString("rijishu", jsonObject.getString("rijishu"));

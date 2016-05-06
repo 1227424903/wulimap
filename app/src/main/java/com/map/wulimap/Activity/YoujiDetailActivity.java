@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,7 +27,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.andexert.library.RippleView;
 import com.cocosw.bottomsheet.BottomSheet;
-import com.map.wulimap.QQshareListener.ShareListener;
+import com.map.wulimap.listener.QQShareListener;
 import com.map.wulimap.R;
 import com.map.wulimap.util.DownloadUtil;
 import com.map.wulimap.util.FileUtil;
@@ -46,6 +47,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -83,8 +85,8 @@ public class YoujiDetailActivity extends AppCompatActivity {
     ImageButton shou;
     BottomSheet sheet;
     Tencent mTencent;
-    ShareListener myListener;
-
+    QQShareListener myListener;
+    Uri uri;
 
     private String appid = "wxc7cc4ae85bebdd30"; // 官网获得的appId
     private IWXAPI wxApi;// 第三方app和微信通讯的openapi接口
@@ -234,6 +236,12 @@ public class YoujiDetailActivity extends AppCompatActivity {
         if (FileUtil.wenjianshifoucunzai("/sdcard/map/" + tupian + "-yasuo.jpg")) {
             Bitmap bitmap = BitmapFactory.decodeFile("/sdcard/map/" + tupian + "-yasuo.jpg");
             imageView.setImageBitmap(bitmap);
+            //url编码
+            try {
+                tupianbianmaming = URLEncoder.encode(tupian, "utf-8");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } else {
             //url编码
             try {
@@ -249,6 +257,18 @@ public class YoujiDetailActivity extends AppCompatActivity {
 //点击图片查看详情
         imageView.setOnClickListener(new View.OnClickListener() { // 点击放大
             public void onClick(View paramView) {
+
+                uri = Uri.parse("http://wode123123-test.stor.sinaapp.com/" + tupianbianmaming + "-yasuo.jpg");
+                Log.e("uri", uri.toString());
+                Intent intent = new Intent(YoujiDetailActivity.this, PhotoActivity.class);
+                intent.putExtra("photo", uri);
+                intent.putExtra("thumbnail", uri);
+                YoujiDetailActivity.this.startActivity(intent);
+
+
+
+              /*
+
                 View imgEntryView = (View) LayoutInflater.from(YoujiDetailActivity.this)
                         .inflate(R.layout.pop_photo_dialog, null);
 
@@ -269,6 +289,11 @@ public class YoujiDetailActivity extends AppCompatActivity {
                         dialog.cancel();
                     }
                 });
+                */
+
+
+
+
             }
         });
 
@@ -348,7 +373,7 @@ public class YoujiDetailActivity extends AppCompatActivity {
         wxApi.registerApp(appid);
         //腾讯
         mTencent = Tencent.createInstance("1105170987", this.getApplicationContext());
-        myListener = new ShareListener(YoujiDetailActivity.this);
+        myListener = new QQShareListener(YoujiDetailActivity.this);
         ImageButton imageButton11 = (ImageButton) findViewById(R.id.fenxiang);
         imageButton11.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -670,7 +695,7 @@ public class YoujiDetailActivity extends AppCompatActivity {
 
     //分享回调
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        ShareListener myListener = new ShareListener(YoujiDetailActivity.this);
+        QQShareListener myListener = new QQShareListener(YoujiDetailActivity.this);
         Tencent.onActivityResultData(requestCode, resultCode, data, myListener);
     }
 }

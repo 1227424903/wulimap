@@ -263,14 +263,6 @@ public class HomeFragment extends Fragment {
         });
 
 
-//系统消息
-        LinearLayout linearLayout8 = (LinearLayout) view.findViewById(R.id.xitongxiaoxi);
-        linearLayout8.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                context1.startActivity(new Intent(context1, NoticeActivity.class));
-            }
-        });
 //我的消息
         LinearLayout linearLayout9 = (LinearLayout) view.findViewById(R.id.wodexiaoxi);
         linearLayout9.setOnClickListener(new View.OnClickListener() {

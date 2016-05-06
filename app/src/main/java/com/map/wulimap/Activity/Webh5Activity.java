@@ -16,7 +16,7 @@ import android.widget.Button;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.andexert.library.RippleView;
 import com.cocosw.bottomsheet.BottomSheet;
-import com.map.wulimap.QQshareListener.ShareListener;
+import com.map.wulimap.listener.QQShareListener;
 import com.map.wulimap.R;
 import com.map.wulimap.util.GetRoundedBitmapUtil;
 import com.tencent.connect.share.QQShare;
@@ -38,7 +38,7 @@ public class Webh5Activity extends AppCompatActivity {
     //初始化控件
     BottomSheet sheet;
     Tencent mTencent;
-    ShareListener myListener;
+    QQShareListener myListener;
     WebView webView;
     MaterialDialog progDialog;
     Bitmap bw, bm;
@@ -88,7 +88,7 @@ public class Webh5Activity extends AppCompatActivity {
         wxApi.registerApp(appid);
         //腾讯
         mTencent = Tencent.createInstance("1105170987", this.getApplicationContext());
-        myListener = new ShareListener(Webh5Activity.this);
+        myListener = new QQShareListener(Webh5Activity.this);
 
         final RippleView rippleView = (RippleView) findViewById(R.id.fenxiang);
         rippleView.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
@@ -182,7 +182,7 @@ public class Webh5Activity extends AppCompatActivity {
 
     //qq分享回调
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        ShareListener myListener = new ShareListener(Webh5Activity.this);
+        QQShareListener myListener = new QQShareListener(Webh5Activity.this);
         Tencent.onActivityResultData(requestCode, resultCode, data, myListener);
     }
 

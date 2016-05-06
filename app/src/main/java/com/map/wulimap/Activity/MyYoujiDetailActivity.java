@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,7 +27,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.andexert.library.RippleView;
 import com.cocosw.bottomsheet.BottomSheet;
-import com.map.wulimap.QQshareListener.ShareListener;
+import com.map.wulimap.listener.QQShareListener;
 import com.map.wulimap.R;
 import com.map.wulimap.util.GetRoundedBitmapUtil;
 import com.map.wulimap.util.ToastUtil;
@@ -70,7 +71,7 @@ public class MyYoujiDetailActivity extends AppCompatActivity {
     MaterialDialog progDialog;
     BottomSheet sheet;
     Tencent mTencent;
-    ShareListener myListener;
+    QQShareListener myListener;
     //初始化分享控件
     private String appid = "wxc7cc4ae85bebdd30"; // 官网获得的appId
     private IWXAPI wxApi;// 第三方app和微信通讯的openapi接口
@@ -107,6 +108,12 @@ public class MyYoujiDetailActivity extends AppCompatActivity {
         if (FileUtil.wenjianshifoucunzai("/sdcard/map/" + tupian + "-yasuo.jpg")) {
             Bitmap bitmap = BitmapFactory.decodeFile("/sdcard/map/" + tupian + "-yasuo.jpg");
             imageView.setImageBitmap(bitmap);
+            //url编码
+            try {
+                tupianbianmaming = URLEncoder.encode(tupian, "utf-8");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } else {
             //url编码
             try {
@@ -122,26 +129,13 @@ public class MyYoujiDetailActivity extends AppCompatActivity {
 //图片详情按钮
         imageView.setOnClickListener(new View.OnClickListener() { // 点击放大
             public void onClick(View paramView) {
-                View imgEntryView = (View) LayoutInflater.from(MyYoujiDetailActivity.this)
-                        .inflate(R.layout.pop_photo_dialog, null);
-
-                final AlertDialog dialog = new AlertDialog.Builder(MyYoujiDetailActivity.this).create();
-                ImageView imageview = (ImageView) imgEntryView.findViewById(R.id.large_image);
-
-                if (FileUtil.wenjianshifoucunzai("/sdcard/map/" + tupian + "-yasuo.jpg")) {
-                    Bitmap bitmap = BitmapFactory.decodeFile("/sdcard/map/" + tupian + "-yasuo.jpg");
-                    imageview.setImageBitmap(bitmap);
-                }
-
-
-                dialog.setView(imgEntryView); // 自定义dialog
-                dialog.show();
-                // 点击布局文件（也可以理解为点击大图）后关闭dialog，这里的dialog不需要按钮
-                imgEntryView.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View paramView) {
-                        dialog.cancel();
-                    }
-                });
+                Uri uri;
+                uri = Uri.parse("http://wode123123-test.stor.sinaapp.com/" + tupianbianmaming + "-yasuo.jpg");
+                Log.e("uri", uri.toString());
+                Intent intent = new Intent(MyYoujiDetailActivity.this, PhotoActivity.class);
+                intent.putExtra("photo", uri);
+                intent.putExtra("thumbnail", uri);
+                MyYoujiDetailActivity.this.startActivity(intent);
             }
         });
 //评论内容
@@ -233,7 +227,7 @@ public class MyYoujiDetailActivity extends AppCompatActivity {
         wxApi.registerApp(appid);
         //腾讯
         mTencent = Tencent.createInstance("1105170987", this.getApplicationContext());
-        myListener = new ShareListener(MyYoujiDetailActivity.this);
+        myListener = new QQShareListener(MyYoujiDetailActivity.this);
         ImageButton imageButton11 = (ImageButton) findViewById(R.id.fenxiang);
         imageButton11.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -499,7 +493,7 @@ public class MyYoujiDetailActivity extends AppCompatActivity {
 
     //分享回调
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        ShareListener myListener = new ShareListener(MyYoujiDetailActivity.this);
+        QQShareListener myListener = new QQShareListener(MyYoujiDetailActivity.this);
         Tencent.onActivityResultData(requestCode, resultCode, data, myListener);
     }
 }

@@ -23,7 +23,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.andexert.library.RippleView;
 import com.cocosw.bottomsheet.BottomSheet;
-import com.map.wulimap.QQshareListener.ShareListener;
+import com.map.wulimap.listener.QQShareListener;
 import com.map.wulimap.R;
 import com.map.wulimap.util.GetRoundedBitmapUtil;
 import com.tencent.connect.share.QQShare;
@@ -47,7 +47,7 @@ public class WebActivity extends AppCompatActivity {
     Bitmap bw, bm;
     BottomSheet sheet;
     Tencent mTencent;
-    ShareListener myListener;
+    QQShareListener myListener;
     //初始化变量
     String wangzhi;
     String tupian;
@@ -109,7 +109,7 @@ public class WebActivity extends AppCompatActivity {
         wxApi.registerApp(appid);
         //腾讯
         mTencent = Tencent.createInstance("1105170987", this.getApplicationContext());
-        myListener = new ShareListener(WebActivity.this);
+        myListener = new QQShareListener(WebActivity.this);
         final RippleView rippleView = (RippleView) findViewById(R.id.fenxiang);
         rippleView.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
             @Override
@@ -225,7 +225,7 @@ public class WebActivity extends AppCompatActivity {
 
     //qq分享回调
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        ShareListener myListener = new ShareListener(WebActivity.this);
+        QQShareListener myListener = new QQShareListener(WebActivity.this);
         Tencent.onActivityResultData(requestCode, resultCode, data, myListener);
     }
 
