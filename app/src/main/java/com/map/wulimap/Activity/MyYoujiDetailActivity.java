@@ -30,6 +30,7 @@ import com.cocosw.bottomsheet.BottomSheet;
 import com.map.wulimap.listener.QQShareListener;
 import com.map.wulimap.R;
 import com.map.wulimap.util.GetRoundedBitmapUtil;
+import com.map.wulimap.util.LoadAndSaveImage;
 import com.map.wulimap.util.ToastUtil;
 import com.map.wulimap.util.DownloadUtil;
 import com.map.wulimap.util.HtmlService;
@@ -121,9 +122,11 @@ public class MyYoujiDetailActivity extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            DownloadUtil down = new DownloadUtil();
-            down.downloadApk(tupian + "-yasuo.jpg", "http://wode123123-test.stor.sinaapp.com/" + tupianbianmaming + "-yasuo.jpg", "/sdcard/map/");
-
+            new LoadAndSaveImage(MyYoujiDetailActivity.this, imageView, tupian + "-yasuo.jpg", "http://wode123123-test.stor.sinaapp.com/" + tupianbianmaming + "-yasuo.jpg", "/sdcard/map/");
+                                /*
+                                DownloadUtil down = new DownloadUtil();
+                                down.downloadApk(tupianming + "-yasuo.jpg", "http://wode123123-test.stor.sinaapp.com/" + bianmatupianming + "-yasuo.jpg", "/sdcard/map/");
+                             */
         }
 
 //图片详情按钮

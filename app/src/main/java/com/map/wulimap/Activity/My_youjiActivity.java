@@ -34,6 +34,7 @@ import com.map.wulimap.R;
 import com.map.wulimap.util.DownloadUtil;
 import com.map.wulimap.util.FileUtil;
 import com.map.wulimap.util.HtmlService;
+import com.map.wulimap.util.LoadAndSaveImage;
 import com.map.wulimap.util.ToastUtil;
 import com.map.wulimap.view.RefreshLayout;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
@@ -289,9 +290,11 @@ public class My_youjiActivity extends AppCompatActivity implements OnDismissCall
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
+                                new LoadAndSaveImage(My_youjiActivity.this, imageview, tupianming + "-yasuo.jpg", "http://wode123123-test.stor.sinaapp.com/" + bianmatupianming + "-yasuo.jpg", "/sdcard/map/");
+                                /*
                                 DownloadUtil down = new DownloadUtil();
                                 down.downloadApk(tupianming + "-yasuo.jpg", "http://wode123123-test.stor.sinaapp.com/" + bianmatupianming + "-yasuo.jpg", "/sdcard/map/");
-
+                             */
                             }
 
 
@@ -338,6 +341,7 @@ public class My_youjiActivity extends AppCompatActivity implements OnDismissCall
                 case 3:
                     ToastUtil.show(My_youjiActivity.this, "还没有游记！请写吧");
 
+                    listView.setBackground(getResources().getDrawable(R.drawable.icon_no_news));
                     break;
                 case 4:
                     //第一次获取数据后，每一次  通知

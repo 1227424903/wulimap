@@ -32,6 +32,7 @@ import com.andexert.library.RippleView;
 import com.map.wulimap.R;
 import com.map.wulimap.util.DownloadUtil;
 import com.map.wulimap.util.HtmlService;
+import com.map.wulimap.util.LoadAndSaveImage;
 import com.map.wulimap.util.ToastUtil;
 import com.map.wulimap.util.FileUtil;
 import com.map.wulimap.view.RefreshLayout;
@@ -296,9 +297,11 @@ public class My_rijiActivity extends AppCompatActivity implements OnDismissCallb
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
+                                new LoadAndSaveImage(My_rijiActivity.this, imageview, tupianming + "-yasuo.jpg", "http://wode123123-test.stor.sinaapp.com/" + bianmatupianming + "-yasuo.jpg", "/sdcard/map/");
+                                /*
                                 DownloadUtil down = new DownloadUtil();
                                 down.downloadApk(tupianming + "-yasuo.jpg", "http://wode123123-test.stor.sinaapp.com/" + bianmatupianming + "-yasuo.jpg", "/sdcard/map/");
-
+                             */
                             }
 
                             Button button = (Button) linearLayout.findViewById(R.id.guanzhu);
@@ -346,6 +349,7 @@ public class My_rijiActivity extends AppCompatActivity implements OnDismissCallb
                 case 3:
                     ToastUtil.show(My_rijiActivity.this, "还没有日记！去写吧");
 
+                    listView.setBackground(getResources().getDrawable(R.drawable.icon_no_news));
                     break;
                 case 4:
                     //第一次获取数据后，每一次  通知

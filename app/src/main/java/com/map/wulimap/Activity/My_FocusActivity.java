@@ -336,6 +336,7 @@ public class My_FocusActivity extends AppCompatActivity {
                 case 3:
                     ToastUtil.show(My_FocusActivity.this, "还没有关注的人！");
 
+                    listView.setBackground(getResources().getDrawable(R.drawable.icon_no_news));
                     break;
                 case 4:
                     //第一次获取数据后，每一次  通知

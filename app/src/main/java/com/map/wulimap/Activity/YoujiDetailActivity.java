@@ -33,6 +33,7 @@ import com.map.wulimap.util.DownloadUtil;
 import com.map.wulimap.util.FileUtil;
 import com.map.wulimap.util.GetRoundedBitmapUtil;
 import com.map.wulimap.util.HtmlService;
+import com.map.wulimap.util.LoadAndSaveImage;
 import com.map.wulimap.util.ToastUtil;
 import com.map.wulimap.util.IshaveemojiUtil;
 import com.tencent.connect.share.QQShare;
@@ -187,6 +188,7 @@ public class YoujiDetailActivity extends AppCompatActivity {
                                         SharedPreferences sharedPreferences = getSharedPreferences("tarenzhanghu", MODE_PRIVATE);
                                         SharedPreferences.Editor editor = sharedPreferences.edit();
                                         editor.putString("shoujihao", "");
+                                        editor.putString("userid", jsonObject.getString("userid"));
                                         editor.putString("youjishu", jsonObject.getString("youjishu"));
                                         editor.putString("rijishu", jsonObject.getString("rijishu"));
                                         editor.putString("nicheng", jsonObject.getString("nicheng"));
@@ -249,9 +251,11 @@ public class YoujiDetailActivity extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            DownloadUtil down = new DownloadUtil();
-            down.downloadApk(tupian + "-yasuo.jpg", "http://wode123123-test.stor.sinaapp.com/" + tupianbianmaming + "-yasuo.jpg", "/sdcard/map/");
-
+            new LoadAndSaveImage(YoujiDetailActivity.this, imageView, tupian + "-yasuo.jpg", "http://wode123123-test.stor.sinaapp.com/" + tupianbianmaming + "-yasuo.jpg", "/sdcard/map/");
+                                /*
+                                DownloadUtil down = new DownloadUtil();
+                                down.downloadApk(tupianming + "-yasuo.jpg", "http://wode123123-test.stor.sinaapp.com/" + bianmatupianming + "-yasuo.jpg", "/sdcard/map/");
+                             */
         }
 
 //点击图片查看详情

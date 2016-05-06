@@ -349,6 +349,7 @@ public class FocusOnMeActivity extends AppCompatActivity {
                 case 3:
                     ToastUtil.show(FocusOnMeActivity.this, "还没有被关注的人！");
 
+                    listView.setBackground(getResources().getDrawable(R.drawable.icon_no_news));
 
                     break;
                 case 4:

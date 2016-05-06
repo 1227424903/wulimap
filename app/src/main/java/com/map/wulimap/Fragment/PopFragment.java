@@ -35,6 +35,7 @@ import com.map.wulimap.R;
 import com.map.wulimap.util.DownloadUtil;
 import com.map.wulimap.util.FileUtil;
 import com.map.wulimap.util.HtmlService;
+import com.map.wulimap.util.LoadAndSaveImage;
 import com.map.wulimap.util.ToastUtil;
 import com.map.wulimap.view.RefreshLayout;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
@@ -320,6 +321,7 @@ public class PopFragment extends Fragment implements OnDismissCallback {
 
                         @Override
                         public View getView(int i, View view, ViewGroup viewGroup) {
+                            Log.e("uri", Integer.toString(i));
                             SharedPreferences sharedPreferences = context1.getSharedPreferences("tuijianyouji", Context.MODE_PRIVATE);
                             LinearLayout linearLayout = (LinearLayout) LayoutInflater.from(context1)
                                     .inflate(R.layout.youji_detail, null);
@@ -353,9 +355,12 @@ public class PopFragment extends Fragment implements OnDismissCallback {
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
+
+                                new LoadAndSaveImage(context1, imageview, tupianming + "-yasuo.jpg", "http://wode123123-test.stor.sinaapp.com/" + bianmatupianming + "-yasuo.jpg", "/sdcard/map/");
+                                /*
                                 DownloadUtil down = new DownloadUtil();
                                 down.downloadApk(tupianming + "-yasuo.jpg", "http://wode123123-test.stor.sinaapp.com/" + bianmatupianming + "-yasuo.jpg", "/sdcard/map/");
-
+                             */
                             }
 
                             TextView textView4 = (TextView) linearLayout.findViewById(R.id.zanshu);
@@ -423,19 +428,6 @@ public class PopFragment extends Fragment implements OnDismissCallback {
     };
 
 
-    //Activity返回结果
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        super.onActivityResult(requestCode, resultCode, intent);
-        if (requestCode == 0 && resultCode == 0) {
-            Bundle date = intent.getExtras();
-            shanchuyoujiid = date.getString("keyword");
-            if (shanchuyoujiid.equals("")) {
-                huoqushuju();
-            }
-
-        }
-    }
 
 
     //获取数据

@@ -34,6 +34,7 @@ import com.map.wulimap.R;
 import com.map.wulimap.util.DownloadUtil;
 import com.map.wulimap.util.FileUtil;
 import com.map.wulimap.util.HtmlService;
+import com.map.wulimap.util.LoadAndSaveImage;
 import com.map.wulimap.util.ToastUtil;
 import com.map.wulimap.view.RefreshLayout;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
@@ -300,9 +301,11 @@ public class YoujiCircleActivity extends AppCompatActivity implements OnDismissC
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
+                                new LoadAndSaveImage(YoujiCircleActivity.this, imageview, tupianming + "-yasuo.jpg", "http://wode123123-test.stor.sinaapp.com/" + bianmatupianming + "-yasuo.jpg", "/sdcard/map/");
+                                /*
                                 DownloadUtil down = new DownloadUtil();
                                 down.downloadApk(tupianming + "-yasuo.jpg", "http://wode123123-test.stor.sinaapp.com/" + bianmatupianming + "-yasuo.jpg", "/sdcard/map/");
-
+                             */
                             }
 
 

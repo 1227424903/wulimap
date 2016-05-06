@@ -55,7 +55,7 @@ public class SearchFriendActivity extends AppCompatActivity implements Recogniti
     int shuliang;
     List<String> listString1;
     //初始化控件
-    AnimationAdapter mAnimAdapter;
+
     ListView listView;
     SharedPreferences sharedPreferences1;
     MaterialDialog progDialog;
@@ -63,6 +63,7 @@ public class SearchFriendActivity extends AppCompatActivity implements Recogniti
     //初始化分享常量
     private static final String TAG = "Touch";
     private static final int EVENT_ERROR = 11;
+    //初始化语音常量
     View speechTips;
     View speechWave;
     private SpeechRecognizer speechRecognizer;
@@ -106,7 +107,9 @@ public class SearchFriendActivity extends AppCompatActivity implements Recogniti
         sharedPreferences1 = getSharedPreferences("sousutarenjilu", MODE_PRIVATE);
         final SharedPreferences.Editor editor1 = sharedPreferences1.edit();
         shuliang = sharedPreferences1.getInt("shuliang", 0);
+
         listString1 = new ArrayList<String>();
+        listView = (ListView) findViewById(R.id.sousujieguo);
 
         if (shuliang > 0) {
             for (int i = shuliang; i > 0; i--) {
@@ -115,130 +118,116 @@ public class SearchFriendActivity extends AppCompatActivity implements Recogniti
             ArrayAdapter<String> aAdapter1 = new ArrayAdapter<String>(
                     getApplicationContext(),
                     R.layout.content_search_friend_record, listString1);
-
-
-            listView = (ListView) findViewById(R.id.sousujieguo);
-            //下面出现动画
-            // SwingBottomInAnimationAdapter swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(new SwipeDismissAdapter(baseAdapter,PopActivity.this));
-            // swingBottomInAnimationAdapter.setAbsListView(listView);
-            // assert swingBottomInAnimationAdapter.getViewAnimator() != null;
-            //  swingBottomInAnimationAdapter.getViewAnimator().setInitialDelayMillis(300);
-            //右边出现动画
-            if (!(mAnimAdapter instanceof SwingRightInAnimationAdapter)) {
-                mAnimAdapter = new SwingRightInAnimationAdapter(aAdapter1);
-                mAnimAdapter.setAbsListView(listView);
-                listView.setAdapter(mAnimAdapter);
-            }
-
-//记录点击
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    jiegou = listString1.get(i);
-                    showProgressDialog();
-                    //url编码
-                    try {
-                        jieguo = URLEncoder.encode(jiegou, "utf-8");
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    //手机号
-                    if (jieguo.length() == 11 && jiegou.length() == 11) {
-                        new Thread() {
-                            @Override
-                            public void run() {
-                                try {
-                                    getjieguo = HtmlService.getHtml("http://wode123123.sinaapp.com/gushiditu/huoqutarenzhanghu.php?shoujihao=" + jiegou);
-                                } catch (Exception e) {
-                                }
-
-                                //网络问题
-                                if (!(getjieguo == null || getjieguo == "")) {
-                                    //删首尾空
-                                    getjieguo = getjieguo.trim();
-                                    if (getjieguo.equals("0")) {
-                                        //没有此人
-                                        handler.sendEmptyMessageDelayed(1, 1000);
-                                    } else {
-                                        try {
-                                            JSONArray arr = new JSONArray(getjieguo);
-                                            JSONObject jsonObject = (JSONObject) arr.get(0);
-                                            SharedPreferences sharedPreferences = getSharedPreferences("tarenzhanghu", MODE_PRIVATE);
-                                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                                            editor.putString("shoujihao", jiegou);
-                                            editor.putString("from", "pengyou");
-                                            editor.putString("userid", jsonObject.getString("userid"));
-                                            editor.putString("youjishu", jsonObject.getString("youjishu"));
-                                            editor.putString("rijishu", jsonObject.getString("rijishu"));
-                                            editor.putString("nicheng", jsonObject.getString("nicheng"));
-                                            editor.putString("guanzhushu", jsonObject.getString("guanzhushu"));
-                                            editor.putString("beiguanzhushu", jsonObject.getString("beiguanzhushu"));
-                                            editor.putString("icon", jsonObject.getString("icon"));
-                                            editor.commit();
-                                        } catch (JSONException ex) {
-                                        }
-                                        handler.sendEmptyMessageDelayed(2, 1000);
-                                    }
-                                } else {
-                                    //网络失
-                                    handler.sendEmptyMessageDelayed(3, 1000);
-                                }
-                            }
-                        }.start();
-
-                        //昵称
-                    } else {
-                        new Thread() {
-                            @Override
-                            public void run() {
-                                try {
-                                    getjieguo = HtmlService.getHtml("http://wode123123.sinaapp.com/gushiditu/nichengsousu.php?nicheng=" + jieguo);
-                                } catch (Exception e) {
-                                }
-
-                                Log.e("uri", getjieguo);
-                                //网络问题
-                                if (!(getjieguo == null || getjieguo == "")) {
-                                    //删首尾空
-                                    getjieguo = getjieguo.trim();
-                                    if (getjieguo.equals("0")) {
-                                        //没有此人
-                                        handler.sendEmptyMessageDelayed(1, 1000);
-                                    } else {
-                                        try {
-                                            JSONArray arr = new JSONArray(getjieguo);
-                                            JSONObject jsonObject = (JSONObject) arr.get(0);
-                                            SharedPreferences sharedPreferences = getSharedPreferences("tarenzhanghu", MODE_PRIVATE);
-                                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                                            editor.putString("shoujihao", "");
-                                            editor.putString("from", "pengyou");
-                                            editor.putString("userid", jsonObject.getString("userid"));
-                                            editor.putString("youjishu", jsonObject.getString("youjishu"));
-                                            editor.putString("rijishu", jsonObject.getString("rijishu"));
-                                            editor.putString("nicheng", jsonObject.getString("nicheng"));
-                                            editor.putString("guanzhushu", jsonObject.getString("guanzhushu"));
-                                            editor.putString("beiguanzhushu", jsonObject.getString("beiguanzhushu"));
-                                            editor.putString("icon", jsonObject.getString("icon"));
-                                            editor.commit();
-                                        } catch (JSONException ex) {
-                                            Log.e("11", getjieguo);
-                                        }
-                                        handler.sendEmptyMessageDelayed(2, 1000);
-                                    }
-                                } else {
-                                    //网络失
-                                    handler.sendEmptyMessageDelayed(3, 1000);
-                                }
-                            }
-                        }.start();
-
-                    }
-                }
-            });
+            listView.setAdapter(aAdapter1);
         } else {
             //  listView.setVisibility(View.GONE);
         }
 
+//记录点击
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                jiegou = listString1.get(i);
+                showProgressDialog();
+                //url编码
+                try {
+                    jieguo = URLEncoder.encode(jiegou, "utf-8");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                //手机号
+                if (jieguo.length() == 11 && jiegou.length() == 11) {
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            try {
+                                getjieguo = HtmlService.getHtml("http://wode123123.sinaapp.com/gushiditu/huoqutarenzhanghu.php?shoujihao=" + jiegou);
+                            } catch (Exception e) {
+                            }
+
+                            //网络问题
+                            if (!(getjieguo == null || getjieguo == "")) {
+                                //删首尾空
+                                getjieguo = getjieguo.trim();
+                                if (getjieguo.equals("0")) {
+                                    //没有此人
+                                    handler.sendEmptyMessageDelayed(1, 1000);
+                                } else {
+                                    try {
+                                        JSONArray arr = new JSONArray(getjieguo);
+                                        JSONObject jsonObject = (JSONObject) arr.get(0);
+                                        SharedPreferences sharedPreferences = getSharedPreferences("tarenzhanghu", MODE_PRIVATE);
+                                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                                        editor.putString("shoujihao", jiegou);
+                                        editor.putString("from", "pengyou");
+                                        editor.putString("userid", jsonObject.getString("userid"));
+                                        editor.putString("youjishu", jsonObject.getString("youjishu"));
+                                        editor.putString("rijishu", jsonObject.getString("rijishu"));
+                                        editor.putString("nicheng", jsonObject.getString("nicheng"));
+                                        editor.putString("guanzhushu", jsonObject.getString("guanzhushu"));
+                                        editor.putString("beiguanzhushu", jsonObject.getString("beiguanzhushu"));
+                                        editor.putString("icon", jsonObject.getString("icon"));
+                                        editor.commit();
+                                    } catch (JSONException ex) {
+                                    }
+                                    handler.sendEmptyMessageDelayed(2, 1000);
+                                }
+                            } else {
+                                //网络失
+                                handler.sendEmptyMessageDelayed(3, 1000);
+                            }
+                        }
+                    }.start();
+
+                    //昵称
+                } else {
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            try {
+                                getjieguo = HtmlService.getHtml("http://wode123123.sinaapp.com/gushiditu/nichengsousu.php?nicheng=" + jieguo);
+                            } catch (Exception e) {
+                            }
+
+                            Log.e("uri", getjieguo);
+                            //网络问题
+                            if (!(getjieguo == null || getjieguo == "")) {
+                                //删首尾空
+                                getjieguo = getjieguo.trim();
+                                if (getjieguo.equals("0")) {
+                                    //没有此人
+                                    handler.sendEmptyMessageDelayed(1, 1000);
+                                } else {
+                                    try {
+                                        JSONArray arr = new JSONArray(getjieguo);
+                                        JSONObject jsonObject = (JSONObject) arr.get(0);
+                                        SharedPreferences sharedPreferences = getSharedPreferences("tarenzhanghu", MODE_PRIVATE);
+                                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                                        editor.putString("shoujihao", "");
+                                        editor.putString("from", "pengyou");
+                                        editor.putString("userid", jsonObject.getString("userid"));
+                                        editor.putString("youjishu", jsonObject.getString("youjishu"));
+                                        editor.putString("rijishu", jsonObject.getString("rijishu"));
+                                        editor.putString("nicheng", jsonObject.getString("nicheng"));
+                                        editor.putString("guanzhushu", jsonObject.getString("guanzhushu"));
+                                        editor.putString("beiguanzhushu", jsonObject.getString("beiguanzhushu"));
+                                        editor.putString("icon", jsonObject.getString("icon"));
+                                        editor.commit();
+                                    } catch (JSONException ex) {
+                                        Log.e("11", getjieguo);
+                                    }
+                                    handler.sendEmptyMessageDelayed(2, 1000);
+                                }
+                            } else {
+                                //网络失
+                                handler.sendEmptyMessageDelayed(3, 1000);
+                            }
+                        }
+                    }.start();
+
+                }
+            }
+        });
 
 //清除记录
         editText = (EditText) findViewById(R.id.sousukuang);
@@ -252,8 +241,7 @@ public class SearchFriendActivity extends AppCompatActivity implements Recogniti
                     editor1.putInt("shuliang", 0);
                     shuliang = 0;
                     editor1.commit();
-
-                    // listView.setVisibility(View.GONE);
+                    listView.setVisibility(View.GONE);
                 }
 
 
@@ -321,7 +309,7 @@ public class SearchFriendActivity extends AppCompatActivity implements Recogniti
                                         editor1.putString("jilu" + shuliang, jiegou);
                                         editor1.commit();
                                         listString1.add(0, jiegou);
-                                        handler.sendEmptyMessageDelayed(2, 1000);
+                                        handler.sendEmptyMessageDelayed(4, 1000);
                                     }
                                 } else {
                                     //网络失
@@ -369,7 +357,7 @@ public class SearchFriendActivity extends AppCompatActivity implements Recogniti
                                         editor1.putString("jilu" + shuliang, jiegou);
                                         editor1.commit();
                                         listString1.add(0, jiegou);
-                                        handler.sendEmptyMessageDelayed(2, 1000);
+                                        handler.sendEmptyMessageDelayed(4, 1000);
                                     }
                                 } else {
                                     //网络失
@@ -427,32 +415,25 @@ public class SearchFriendActivity extends AppCompatActivity implements Recogniti
                     break;
                 case 2:
                     //找到成功
-                    ArrayAdapter<String> aAdapter1 = new ArrayAdapter<String>(
-                            getApplicationContext(),
-                            R.layout.content_search_friend_record, listString1);
-
-                    //下面出现动画
-                    // SwingBottomInAnimationAdapter swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(new SwipeDismissAdapter(baseAdapter,PopActivity.this));
-                    // swingBottomInAnimationAdapter.setAbsListView(listView);
-                    // assert swingBottomInAnimationAdapter.getViewAnimator() != null;
-                    //  swingBottomInAnimationAdapter.getViewAnimator().setInitialDelayMillis(300);
-//右边出现动画
-
-                    if (!(mAnimAdapter instanceof SwingRightInAnimationAdapter)) {
-                        mAnimAdapter = new SwingRightInAnimationAdapter(aAdapter1);
-                        mAnimAdapter.setAbsListView(listView);
-                        listView.setAdapter(mAnimAdapter);
-                    }
-                    listView.setVisibility(View.VISIBLE);
-
                     dissmissProgressDialog();
                     SearchFriendActivity.this.startActivity(new Intent(SearchFriendActivity.this, FriendAcountActivity.class));
-
                     break;
                 case 3:
                     //没有此人
                     dissmissProgressDialog();
                     ToastUtil.show(SearchFriendActivity.this, "网络故障！");
+                    break;
+                case 4:
+                    //找到成功
+                    ToastUtil.show(SearchFriendActivity.this, "搜素成功！");
+                    ArrayAdapter<String> aAdapter1 = new ArrayAdapter<String>(
+                            getApplicationContext(),
+                            R.layout.content_search_friend_record, listString1);
+
+                    listView.setAdapter(aAdapter1);
+                    listView.setVisibility(View.VISIBLE);
+
+                    dissmissProgressDialog();
                     break;
 
             }

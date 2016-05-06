@@ -31,6 +31,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.andexert.library.RippleView;
 import com.map.wulimap.R;
+import com.map.wulimap.util.LoadAndSaveImage;
 import com.map.wulimap.util.ToastUtil;
 import com.map.wulimap.util.DownloadUtil;
 import com.map.wulimap.util.HtmlService;
@@ -291,9 +292,11 @@ public class Friend_youjiActivity extends AppCompatActivity implements OnDismiss
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
+                                new LoadAndSaveImage(Friend_youjiActivity.this, imageview, tupianming + "-yasuo.jpg", "http://wode123123-test.stor.sinaapp.com/" + bianmatupianming + "-yasuo.jpg", "/sdcard/map/");
+                                /*
                                 DownloadUtil down = new DownloadUtil();
                                 down.downloadApk(tupianming + "-yasuo.jpg", "http://wode123123-test.stor.sinaapp.com/" + bianmatupianming + "-yasuo.jpg", "/sdcard/map/");
-
+                             */
                             }
 
 
@@ -353,6 +356,7 @@ public class Friend_youjiActivity extends AppCompatActivity implements OnDismiss
                 case 3:
                     ToastUtil.show(Friend_youjiActivity.this, "TA还没有游记！");
 
+                    listView.setBackground(getResources().getDrawable(R.drawable.icon_no_news));
                     break;
                 case 4:
                     //第一次获取数据后，每一次  通知

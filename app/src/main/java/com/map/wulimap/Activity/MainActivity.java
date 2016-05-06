@@ -73,7 +73,32 @@ public class MainActivity extends AppCompatActivity {
                     getjieguo1 = getjieguo1.trim();
                 } catch (Exception e) {
                 }
-                handler.sendEmptyMessageDelayed(2, 50);
+                if (getjieguo1 == null || getjieguo1 == "") {
+                    getjieguo1 = "qq";
+                }
+                //图片处理  第一次处理
+                preferences = getSharedPreferences("qd", MODE_PRIVATE);
+                editor = preferences.edit();
+                String qd = preferences.getString("qd", null);
+                String fm = preferences.getString("fm", null);
+                if (getjieguo1.equals(fm)) {
+                } else {
+                    if (!FileUtil.wenjianshifoucunzai("/sdcard/map")) {
+                        FileUtil.chuanjianmulu("/sdcard/map");
+                    }
+                    DownloadUtil down = new DownloadUtil();
+                    down.downloadApk("qidong.jpg", "http://1.wode123123.sinaapp.com/photo/" + getjieguo1 + ".jpg", "/sdcard/map/");
+                    editor.putString("fm", getjieguo1);
+                    editor.commit();
+                }
+
+                if ("1".equals(qd)) {
+                    handler.sendEmptyMessageDelayed(1, 3000);
+                } else {
+                    editor.putString("qd", "1");
+                    editor.commit();
+                    handler.sendEmptyMessageDelayed(2, 3000);
+                }
             }
         }.start();
     }
@@ -82,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
     Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case 0:
+                case 1:
                     //是否登陆过
                     preferences = getSharedPreferences("zhanghu", MODE_PRIVATE);
                     if ("1".equals(preferences.getString("biaoji", null))) {
@@ -93,37 +118,13 @@ public class MainActivity extends AppCompatActivity {
                         MainActivity.this.finish();
                     }
                     break;
-                case 1:
+                case 2:
                     //第一次
                     MainActivity.this.startActivity(new Intent(MainActivity.this, WelcomeActivity.class));
                     MainActivity.this.finish();
                     break;
-                case 2: {
-                    //图片处理  第一次处理
-                    preferences = getSharedPreferences("qd", MODE_PRIVATE);
-                    editor = preferences.edit();
-                    int qd = preferences.getInt("qd", 0);
-                    String fm = preferences.getString("fm", null);
-                    if (getjieguo1.equals(fm)) {
-                    } else {
-                        if (!FileUtil.wenjianshifoucunzai("/sdcard/map")) {
-                            FileUtil.chuanjianmulu("/sdcard/map");
-                        }
-                        DownloadUtil down = new DownloadUtil();
-                        down.downloadApk("qidong.jpg", "http://1.wode123123.sinaapp.com/photo/" + getjieguo1 + ".jpg", "/sdcard/map/");
-                        editor.putString("fm", getjieguo1);
-                        editor.commit();
-                    }
 
-                    if (qd == 1) {
-                        handler.sendEmptyMessageDelayed(0, 3000);
-                    } else {
-                        editor.putInt("qd", 1);
-                        editor.commit();
-                        handler.sendEmptyMessageDelayed(1, 3000);
-                    }
-                    break;
-                }
+
             }
         }
 

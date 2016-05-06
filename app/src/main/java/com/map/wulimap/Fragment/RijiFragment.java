@@ -34,6 +34,7 @@ import com.map.wulimap.R;
 import com.map.wulimap.util.DownloadUtil;
 import com.map.wulimap.util.FileUtil;
 import com.map.wulimap.util.HtmlService;
+import com.map.wulimap.util.LoadAndSaveImage;
 import com.map.wulimap.util.ToastUtil;
 import com.map.wulimap.view.RefreshLayout;
 import com.nhaarman.listviewanimations.appearance.simple.SwingBottomInAnimationAdapter;
@@ -351,9 +352,11 @@ public class RijiFragment extends Fragment implements OnDismissCallback {
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
+                                new LoadAndSaveImage(context1, imageview, tupianming + "-yasuo.jpg", "http://wode123123-test.stor.sinaapp.com/" + bianmatupianming + "-yasuo.jpg", "/sdcard/map/");
+                                /*
                                 DownloadUtil down = new DownloadUtil();
                                 down.downloadApk(tupianming + "-yasuo.jpg", "http://wode123123-test.stor.sinaapp.com/" + bianmatupianming + "-yasuo.jpg", "/sdcard/map/");
-
+                             */
                             }
 
                             TextView textView4 = (TextView) linearLayout.findViewById(R.id.zanshu);
@@ -413,6 +416,7 @@ public class RijiFragment extends Fragment implements OnDismissCallback {
                 case 3:
                     ToastUtil.show(context1, "还没有关注日记！");
 
+                    listView.setBackground(getResources().getDrawable(R.drawable.icon_no_news));
                     break;
                 case 4:
                     //第一次获取数据后，每一次  通知

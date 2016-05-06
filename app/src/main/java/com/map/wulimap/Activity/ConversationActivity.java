@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
+
 import com.andexert.library.RippleView;
 import com.map.wulimap.R;
 import com.map.wulimap.listener.ConversationBehaviorListener;
@@ -114,12 +116,12 @@ public class ConversationActivity extends ActionBarActivity {
                     Button button =(Button)findViewById(R.id.bt3);
                     button.setText(name);
                     if("小木".equals(name)){
-                        final RippleView rippleView = (RippleView) findViewById(R.id.weiguanzhu);
-                        rippleView.setVisibility(View.GONE);
                     }
                     else {
                         //账户
                         final RippleView rippleView = (RippleView) findViewById(R.id.weiguanzhu);
+                        TextView textView = (TextView) findViewById(R.id.caicai);
+                        textView.setVisibility(View.VISIBLE);
                         rippleView.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
                             @Override
                             public void onComplete(RippleView rippleView) {

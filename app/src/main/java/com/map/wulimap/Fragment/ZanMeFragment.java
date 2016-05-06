@@ -306,6 +306,7 @@ public class ZanMeFragment extends Fragment {
                 case 3:
                     ToastUtil.show(context1, "还没有消息！");
 
+                    listView.setBackground(getResources().getDrawable(R.drawable.icon_no_news));
                     break;
                 case 4:
                     //第一次获取数据后，每一次  通知
