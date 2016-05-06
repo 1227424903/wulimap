@@ -193,6 +193,97 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
+                        android:src="@drawable/icon_phonenumber"
+                        android:layout_margin="5dp"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp" />
+
+                    <LinearLayout
+                        android:layout_gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:textSize="16sp"
+                            android:textColor="@color/black"
+                            android:text="建议分享"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:text="有什么想和小木说"
+                            android:layout_marginTop="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.andexert.library.RippleView>
+
+            <com.andexert.library.RippleView
+                android:background="@color/white"
+                android:layout_marginTop="2dp"
+                android:id="@+id/chuangkou"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:rv_centered="true"
+                app:rv_framerate="60"
+                app:rv_alpha="50"
+                app:rv_color="@color/black">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:src="@drawable/icon_consult"
+                        android:layout_margin="5dp"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp" />
+
+                    <LinearLayout
+                        android:layout_gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:textSize="16sp"
+                            android:textColor="@color/black"
+                            android:text="咨询窗口"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:text="有什么想和小木咨询"
+                            android:layout_marginTop="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.andexert.library.RippleView>
+
+
+            <com.andexert.library.RippleView
+                android:background="@color/white"
+                android:layout_marginTop="2dp"
+                android:id="@+id/guanyu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:rv_centered="true"
+                app:rv_framerate="60"
+                app:rv_alpha="50"
+                app:rv_color="@color/black">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
                         android:src="@drawable/tabbar_compose_more"
                         android:layout_margin="5dp"
                         android:layout_width="45dp"
@@ -208,20 +299,18 @@
                         <TextView
                             android:textSize="16sp"
                             android:textColor="@color/black"
-                            android:text="建议反馈"
+                            android:text="关于软件"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
                         <TextView
-                            android:text="有什么想和小木说"
+                            android:text="软件详情"
                             android:layout_marginTop="5dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
                     </LinearLayout>
                 </LinearLayout>
             </com.andexert.library.RippleView>
-
-
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

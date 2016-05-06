@@ -9,7 +9,7 @@
 
     <LinearLayout
 
-        android:background="@color/bulu"
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -32,17 +32,18 @@
             android:layout_marginBottom="5dp">
 
             <TextView
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:id="@+id/nicheng"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="肖幕"
+
                 android:textSize="16sp" />
 
             <TextView
                 android:layout_marginTop="2dp"
                 android:textSize="14sp"
-                android:textColor="@color/gray"
+                android:textColor="@color/white2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="ta很懒！" />
@@ -68,7 +69,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:background="@color/bulu"
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="1dp">
 
@@ -82,7 +83,7 @@
 
 
     <LinearLayout
-        android:background="@color/bulu"
+        android:background="@color/white"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -97,7 +98,7 @@
             android:padding="1dp"
             android:textSize="12sp"
             android:text="点击查看详情"
-            android:textColor="@color/white" />
+            android:textColor="@color/white2" />
 
         <ImageView
             android:layout_marginBottom="3dp"

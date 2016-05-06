@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/gray"
+    android:background="@color/gray1"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ScrollView
@@ -148,66 +148,9 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
-                android:paddingTop="3dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:id="@+id/wodexiaoxi"
-                    android:paddingTop="5dp"
-                    android:background="@drawable/buton_yingying"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginRight="3dp">
-
-                    <ImageView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:src="@drawable/icon_my_news_big" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="我的消息"
-                        android:textColor="@color/black"
-                        android:textSize="14sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/xitongxiaoxi"
-                    android:paddingTop="5dp"
-                    android:background="@drawable/buton_yingying"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-
-
-                    >
-
-                    <ImageView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:src="@drawable/icon_notice" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="系统消息"
-                        android:textColor="@color/black"
-                        android:textSize="14sp" />
-
-                </LinearLayout>
-
-            </LinearLayout>
 
             <LinearLayout
+
                 android:paddingTop="3dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -215,6 +158,7 @@
 
 
                 <LinearLayout
+                    android:paddingLeft="50dp"
                     android:id="@+id/wodeyouji"
                     android:paddingTop="5dp"
                     android:background="@drawable/buton_yingying"
@@ -239,7 +183,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-
+                    android:paddingRight="50dp"
                     android:paddingTop="5dp"
                     android:background="@drawable/buton_yingying"
                     android:layout_weight="1"
@@ -262,6 +206,38 @@
                         android:textSize="14sp" />
 
                 </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:paddingTop="3dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/wodexiaoxi"
+                    android:paddingTop="5dp"
+                    android:background="@drawable/buton_yingying"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/icon_my_news_big" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="我的消息"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

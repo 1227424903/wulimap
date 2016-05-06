@@ -7,12 +7,12 @@
     <LinearLayout
         android:layout_margin="5dp"
         android:orientation="vertical"
-        android:background="@color/cheng"
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:background="@drawable/yuanjiao_cheng"
+            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -35,7 +35,7 @@
 
                 <TextView
                     android:layout_marginTop="5dp"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:id="@+id/pinglunnicheng"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
 
                 <TextView
 
-                    android:textColor="@color/gray"
+                    android:textColor="@color/white2"
                     android:id="@+id/pinglunshujian"
                     android:textSize="16sp"
                     android:layout_marginRight="5dp"
@@ -62,10 +62,10 @@
             android:id="@+id/pinglunneirong"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/yuanjiao_cheng"
+
             android:padding="1dp"
             android:textSize="15sp"
-            android:textColor="@color/white"
+            android:textColor="@color/white2"
             android:text="你啊觉得肯定会" />
 
         <LinearLayout
@@ -90,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:padding="1dp"
                 android:textSize="12sp"
-                android:textColor="@color/white"
+                android:textColor="@color/white2"
                 android:text="点击查看详情" />
 
             <ImageView

@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray"
+    android:background="@color/gray1"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_rijixiangqing"
     tools:context="com.map.wulimap.Activity.RijiDetailActivity">
@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="@color/gray">
+            android:background="@color/gray1">
 
             <LinearLayout
                 android:background="@color/white"
@@ -259,9 +259,10 @@
                 android:padding="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/white"></LinearLayout>
+                android:background="@color/gray1"></LinearLayout>
 
             <LinearLayout
+                android:background="@color/gray1"
                 android:layout_width="match_parent"
                 android:layout_height="90dp"></LinearLayout>
         </LinearLayout>

@@ -7,7 +7,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_riji"
     tools:context="com.map.wulimap.Activity.Write_rijiActivity"
-    android:background="@color/gray">
+    android:background="@color/gray1">
 
     <LinearLayout
         android:id="@+id/shijian"
@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:orientation="horizontal"
-        android:background="@color/green"
+        android:background="@color/gray1"
 
         >
 
