@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.map.wulimap.R;
+import com.map.wulimap.util.Constant;
 import com.map.wulimap.util.ToastUtil;
 import com.map.wulimap.util.HtmlService;
 
@@ -71,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
                         new Thread() {
                             public void run() {
                                 try {
-                                    getjieguo = HtmlService.getHtml("http://wode123123.sinaapp.com/gushiditu/shifouzhuce.php?shoujihao=" + zhanghu);
+                                    getjieguo = HtmlService.getHtml(Constant.PHP_URL + "gushiditu/shifouzhuce.php?shoujihao=" + zhanghu);
 
                                 } catch (Exception e) {
                                 }
@@ -94,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
                                                     } catch (Exception e) {
                                                         e.printStackTrace();
                                                     }
-                                                    getjieguo = HtmlService.getHtml("http://wode123123.sinaapp.com/gushiditu/denglu.php?shoujihao=" + zhanghu + "&mima=" + mima);
+                                                    getjieguo = HtmlService.getHtml(Constant.PHP_URL + "gushiditu/denglu.php?shoujihao=" + zhanghu + "&mima=" + mima);
                                                     //删首尾空
                                                     getjieguo = getjieguo.trim();
                                                     Log.e("uri", getjieguo);
@@ -105,7 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                                                     new Thread() {
                                                         public void run() {
                                                             try {
-                                                                getjieguo = HtmlService.getHtml("http://wode123123.sinaapp.com/gushiditu/huquzhanghu.php?shoujihao=" + zhanghu);
+                                                                getjieguo = HtmlService.getHtml(Constant.PHP_URL + "gushiditu/huquzhanghu.php?shoujihao=" + zhanghu);
                                                                 //删首尾空
                                                                 getjieguo = getjieguo.trim();
                                                             } catch (Exception e) {

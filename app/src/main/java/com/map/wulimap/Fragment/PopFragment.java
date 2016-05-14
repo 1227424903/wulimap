@@ -32,6 +32,7 @@ import com.andexert.library.RippleView;
 import com.map.wulimap.Activity.CardActivity;
 import com.map.wulimap.Activity.YoujiDetailActivity;
 import com.map.wulimap.R;
+import com.map.wulimap.util.Constant;
 import com.map.wulimap.util.DownloadUtil;
 import com.map.wulimap.util.FileUtil;
 import com.map.wulimap.util.HtmlService;
@@ -47,7 +48,6 @@ import org.json.JSONObject;
 import java.net.URLEncoder;
 
 public class PopFragment extends Fragment implements OnDismissCallback {
-
     //初始化控件
     private OnFragmentInteractionListener mListener;
     static PopFragment fragment;
@@ -85,10 +85,10 @@ public class PopFragment extends Fragment implements OnDismissCallback {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_pop, container, false);
-        initsetting();
+
         initdate();
         initview();
-//获取数据
+        //获取数据
         huoqushuju();
 
         return view;
@@ -177,6 +177,8 @@ public class PopFragment extends Fragment implements OnDismissCallback {
                         task.execute();
                     }
                 });
+
+
         swipeRefreshLayout.post(new Runnable() {
             public void run() {
                 swipeRefreshLayout.setRefreshing(true);
@@ -188,10 +190,11 @@ public class PopFragment extends Fragment implements OnDismissCallback {
             }
         }, 1500);
 
+
+////加载更多操作
         swipeRefreshLayout.setOnLoadListener(new RefreshLayout.OnLoadListener() {
             @Override
             public void onLoad() {
-                ////加载更多操作
                 swipeRefreshLayout.post(new Runnable() {
                     public void run() {
                         swipeRefreshLayout.setRefreshing(true);
@@ -212,19 +215,6 @@ public class PopFragment extends Fragment implements OnDismissCallback {
 
     }
 
-
-    public void initsetting() {
-        /*
-//沉浸模式
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            Window window = context1.getWindow();
-            // Translucent status bar
-            window.setFlags(
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        }
-        */
-    }
 
 
     public void initdate() {
@@ -343,7 +333,7 @@ public class PopFragment extends Fragment implements OnDismissCallback {
                                 if (Integer.parseInt(Long.toString(FileUtil.quwenjianchicun("/sdcard/map/" + tupianming + "-yasuo.jpg"))) < 500) {
                                     FileUtil.shanchuwenjian("/sdcard/map/" + tupianming + "-yasuo.jpg");
                                     DownloadUtil down = new DownloadUtil();
-                                    down.downloadApk(tupianming + "-yasuo.jpg", "http://wode123123-test.stor.sinaapp.com/" + bianmatupianming + "-yasuo.jpg", "/sdcard/map/");
+                                    down.downloadApk(tupianming + "-yasuo.jpg", Constant.PICTURE_URI + bianmatupianming + "-yasuo.jpg@294w_165h_1l", "/sdcard/map/");
                                 } else {
                                     Bitmap bitmap = BitmapFactory.decodeFile("/sdcard/map/" + tupianming + "-yasuo.jpg");
                                     imageview.setImageBitmap(bitmap);
@@ -355,12 +345,7 @@ public class PopFragment extends Fragment implements OnDismissCallback {
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-
-                                new LoadAndSaveImage(context1, imageview, tupianming + "-yasuo.jpg", "http://wode123123-test.stor.sinaapp.com/" + bianmatupianming + "-yasuo.jpg", "/sdcard/map/");
-                                /*
-                                DownloadUtil down = new DownloadUtil();
-                                down.downloadApk(tupianming + "-yasuo.jpg", "http://wode123123-test.stor.sinaapp.com/" + bianmatupianming + "-yasuo.jpg", "/sdcard/map/");
-                             */
+                                new LoadAndSaveImage(context1, imageview, tupianming + "-yasuo.jpg", Constant.PICTURE_URI + bianmatupianming + "-yasuo.jpg@294w_165h_1l", "/sdcard/map/");
                             }
 
                             TextView textView4 = (TextView) linearLayout.findViewById(R.id.zanshu);
@@ -377,13 +362,6 @@ public class PopFragment extends Fragment implements OnDismissCallback {
                     swingBottomInAnimationAdapter.setAbsListView(listView);
                     assert swingBottomInAnimationAdapter.getViewAnimator() != null;
                     swingBottomInAnimationAdapter.getViewAnimator().setInitialDelayMillis(300);
-//右边出现动画
-                    // AnimationAdapter mAnimAdapter;
-                    ///  if (!(mAnimAdapter instanceof SwingRightInAnimationAdapter)) {
-                    //    mAnimAdapter = new SwingRightInAnimationAdapter(baseAdapter);
-                    //    mAnimAdapter.setAbsListView(listView);
-                    //    listView.setAdapter(mAnimAdapter);
-                    // }
 
 
                     listView.setAdapter(swingBottomInAnimationAdapter);
@@ -435,7 +413,7 @@ public class PopFragment extends Fragment implements OnDismissCallback {
         new Thread() {
             public void run() {
                 try {
-                    wangzhi = HtmlService.getHtml("http://wode123123.sinaapp.com/gushiditu/huoqugerenyouji.php?shoujihao=" + shoujihao);
+                    wangzhi = HtmlService.getHtml(Constant.PHP_URL + "gushiditu/huoqugerenyouji.php?shoujihao=" + shoujihao);
                 } catch (Exception e) {
                     handler.sendEmptyMessageDelayed(2, 1000);
                 }

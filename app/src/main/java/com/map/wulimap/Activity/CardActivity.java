@@ -25,6 +25,7 @@ import com.andexert.library.RippleView;
 import com.andtinder.model.CardModel;
 import com.andtinder.view.CardContainer;
 import com.andtinder.view.SimpleCardStackAdapter;
+import com.map.wulimap.util.Constant;
 import com.map.wulimap.util.DownloadUtil;
 import com.map.wulimap.R;
 import com.map.wulimap.util.FileUtil;
@@ -221,7 +222,7 @@ public class CardActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                         DownloadUtil down = new DownloadUtil();
-                        down.downloadApk(tupianming + "-yasuo.jpg", "http://wode123123-test.stor.sinaapp.com/" + bianmatupianming + "-yasuo.jpg", "/sdcard/map/");
+                        down.downloadApk(tupianming + "-yasuo.jpg", Constant.PICTURE_URI + bianmatupianming + "-yasuo.jpg@294w_165h_1l", "/sdcard/map/");
                     }
                     j = j + 1;
                     tupianming = sharedPreferences.getString("tupian" + j, null);
@@ -233,7 +234,7 @@ public class CardActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                         DownloadUtil down1 = new DownloadUtil();
-                        down1.downloadApk(tupianming + "-yasuo.jpg", "http://wode123123-test.stor.sinaapp.com/" + bianmatupianming + "-yasuo.jpg", "/sdcard/map/");
+                        down1.downloadApk(tupianming + "-yasuo.jpg", Constant.PICTURE_URI + bianmatupianming + "-yasuo.jpg@294w_165h_1l", "/sdcard/map/");
                     }
                 } else {
                     if (zhi == zongshu1 - 3) {
@@ -247,7 +248,7 @@ public class CardActivity extends AppCompatActivity {
                                 e.printStackTrace();
                             }
                             DownloadUtil down = new DownloadUtil();
-                            down.downloadApk(tupianming + "-yasuo.jpg", "http://wode123123-test.stor.sinaapp.com/" + bianmatupianming + "-yasuo.jpg", "/sdcard/map/");
+                            down.downloadApk(tupianming + "-yasuo.jpg", Constant.PICTURE_URI + bianmatupianming + "-yasuo.jpg@294w_165h_1l", "/sdcard/map/");
                         }
                     }
                 }

@@ -32,6 +32,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.baidu.speech.VoiceRecognitionService;
 import com.map.wulimap.R;
 import com.map.wulimap.util.BaiduyuyingUtil;
+import com.map.wulimap.util.Constant;
 import com.map.wulimap.util.Sdkversionutil;
 import com.map.wulimap.util.ToastUtil;
 import com.map.wulimap.util.HtmlService;
@@ -141,7 +142,7 @@ public class SearchFriendActivity extends AppCompatActivity implements Recogniti
                         @Override
                         public void run() {
                             try {
-                                getjieguo = HtmlService.getHtml("http://wode123123.sinaapp.com/gushiditu/huoqutarenzhanghu.php?shoujihao=" + jiegou);
+                                getjieguo = HtmlService.getHtml(Constant.PHP_URL + "gushiditu/huoqutarenzhanghu.php?shoujihao=" + jiegou);
                             } catch (Exception e) {
                             }
 
@@ -185,7 +186,7 @@ public class SearchFriendActivity extends AppCompatActivity implements Recogniti
                         @Override
                         public void run() {
                             try {
-                                getjieguo = HtmlService.getHtml("http://wode123123.sinaapp.com/gushiditu/nichengsousu.php?nicheng=" + jieguo);
+                                getjieguo = HtmlService.getHtml(Constant.PHP_URL + "gushiditu/nichengsousu.php?nicheng=" + jieguo);
                             } catch (Exception e) {
                             }
 
@@ -274,7 +275,7 @@ public class SearchFriendActivity extends AppCompatActivity implements Recogniti
                             @Override
                             public void run() {
                                 try {
-                                    getjieguo = HtmlService.getHtml("http://wode123123.sinaapp.com/gushiditu/huoqutarenzhanghu.php?shoujihao=" + jiegou);
+                                    getjieguo = HtmlService.getHtml(Constant.PHP_URL + "gushiditu/huoqutarenzhanghu.php?shoujihao=" + jiegou);
                                 } catch (Exception e) {
                                 }
 
@@ -323,7 +324,7 @@ public class SearchFriendActivity extends AppCompatActivity implements Recogniti
                         new Thread() {
                             public void run() {
                                 try {
-                                    getjieguo = HtmlService.getHtml("http://wode123123.sinaapp.com/gushiditu/nichengsousu.php?nicheng=" + jieguo);
+                                    getjieguo = HtmlService.getHtml(Constant.PHP_URL + "gushiditu/nichengsousu.php?nicheng=" + jieguo);
                                 } catch (Exception e) {
                                 }
 

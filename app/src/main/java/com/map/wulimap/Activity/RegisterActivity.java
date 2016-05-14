@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -16,11 +18,15 @@ import android.widget.EditText;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.andexert.library.RippleView;
 import com.map.wulimap.R;
+import com.map.wulimap.util.Constant;
 import com.map.wulimap.util.GetRoundedBitmapUtil;
 import com.map.wulimap.util.HtmlService;
 import com.map.wulimap.util.ToastUtil;
 
 import java.net.URLEncoder;
+
+import cn.smssdk.EventHandler;
+import cn.smssdk.SMSSDK;
 
 public class RegisterActivity extends AppCompatActivity {
     //初始化控件
@@ -30,9 +36,12 @@ public class RegisterActivity extends AppCompatActivity {
     EditText editText3;
     EditText editText4;
     EditText editText5;
+    EditText editText6;
     Button button;
+    Button button1;
     //初始化变量
-    String wangzhi;
+
+    String yanzhengma;
     String getjieguo;
     String shoujihao;
     String mima;
@@ -40,7 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
     String anquanyouxiang;
     String nicheng;
     String userid;
-
+    int jishi = 60;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +59,41 @@ public class RegisterActivity extends AppCompatActivity {
         userid = GetRoundedBitmapUtil.getRandomCode();
         initsetting();
         initview();
+
+//初始化短信
+        SMSSDK.initSDK(this, "12c58839e4a5c", "c51317979cd1eb35bf51e4a556204907");
+        EventHandler eh = new EventHandler() {
+            @Override
+            public void afterEvent(int event, int result, Object data) {
+                if (result == SMSSDK.RESULT_COMPLETE) {
+                    //回调完成
+                    if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
+                        //提交验证码成功  注册
+                        new Thread() {
+                            public void run() {
+                                try {
+                                    HtmlService.getHtml(Constant.PHP_URL + "gushiditu/zhuce.php?shoujihao=" + shoujihao + "&nicheng=" + nicheng + "&mima=" + mima + "&anquanyouxiang=" + anquanyouxiang + "&userid=" + userid + "&icon=0&guanzhushu=0&beiguanzhushu=0&youjishu=0&rijishu=0");
+                                } catch (Exception e) {
+                                }
+
+                                //注册成功
+                                handler.sendEmptyMessageDelayed(3, 0);
+                            }
+                        }.start();
+                    } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
+                        //获取验证码成功  倒计时
+                        ToastUtil.show(RegisterActivity.this, "获取成功！请及时输入");
+                        jishi = 60;
+                        handler.sendEmptyMessageDelayed(5, 1000);
+                    } else if (event == SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES) {
+                        //返回支持发送验证码的国家列
+                    }
+                } else {
+                    ((Throwable) data).printStackTrace();
+                }
+            }
+        };
+        SMSSDK.registerEventHandler(eh); //注册短信回调
 
     }
 
@@ -64,12 +108,50 @@ public class RegisterActivity extends AppCompatActivity {
             }
 
         });
+//手机号监听
         editText1 = (EditText) findViewById(R.id.shoujihao);
+        editText1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                shoujihao = editText1.getText().toString().trim().replaceAll(" ", "");
+                if (shoujihao.length() == 11) {
+                    button1.setEnabled(true);
+                } else {
+                    button1.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
         editText2 = (EditText) findViewById(R.id.mima);
         editText3 = (EditText) findViewById(R.id.querenmima);
         editText4 = (EditText) findViewById(R.id.nicheng);
         editText5 = (EditText) findViewById(R.id.anquanyouxiang);
+        editText6 = (EditText) findViewById(R.id.yanzhengma);
         button = (Button) findViewById(R.id.zhuce);
+//获取按钮
+        button1 = (Button) findViewById(R.id.huoqu);
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                shoujihao = editText1.getText().toString().trim().replaceAll(" ", "");
+                //空
+                if (shoujihao.equals("") || shoujihao.length() != 11) {
+                    ToastUtil.show(RegisterActivity.this, "请输入正确的手机号！");
+                } else {
+                    //获取验证码
+                    SMSSDK.getVerificationCode("+86", shoujihao);
+                }
+            }
+        });
+
 //注册按钮
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,9 +162,10 @@ public class RegisterActivity extends AppCompatActivity {
                 querenmima = editText3.getText().toString().trim().replaceAll(" ", "");
                 nicheng = editText4.getText().toString().trim().replaceAll(" ", "");
                 anquanyouxiang = editText5.getText().toString().trim().replaceAll(" ", "");
+                yanzhengma = editText6.getText().toString().trim().replaceAll(" ", "");
                 //空
                 if (shoujihao.equals("") || mima.equals("") || querenmima.equals("") || nicheng.equals("") || anquanyouxiang.equals("")) {
-                    ToastUtil.show(RegisterActivity.this, "不能为空！");
+                    ToastUtil.show(RegisterActivity.this, "手机号不能为空！");
                     dissmissProgressDialog();
                 } else {
                     //密码长度短
@@ -91,7 +174,6 @@ public class RegisterActivity extends AppCompatActivity {
                             //两次密码不一致
                             if (mima.equals(querenmima)) {
                                 new Thread() {
-
                                     public void run() {
                                         try {
                                             //url编码
@@ -102,10 +184,7 @@ public class RegisterActivity extends AppCompatActivity {
                                             } catch (Exception e) {
                                                 e.printStackTrace();
                                             }
-
-
-                                            getjieguo = HtmlService.getHtml("http://wode123123.sinaapp.com/gushiditu/shifouzhuce.php?shoujihao=" + shoujihao + "&nicheng=" + nicheng);
-
+                                            getjieguo = HtmlService.getHtml(Constant.PHP_URL + "gushiditu/shifouzhuce.php?shoujihao=" + shoujihao + "&nicheng=" + nicheng);
                                         } catch (Exception e) {
                                         }
                                         //获取数据是否成功
@@ -114,30 +193,18 @@ public class RegisterActivity extends AppCompatActivity {
                                             getjieguo = getjieguo.trim();
                                             if (getjieguo.equals("1")) {
                                                 //手机号已注册
-
                                                 handler.sendEmptyMessageDelayed(1, 0);
                                             } else {
                                                 if (getjieguo.equals("2")) {
                                                     //昵称已用
-
                                                     handler.sendEmptyMessageDelayed(2, 0);
                                                 } else {
-                                                    //没有注册过，注册
-                                                    new Thread() {
-                                                        public void run() {
-                                                            try {
-                                                                HtmlService.getHtml("http://wode123123.sinaapp.com/gushiditu/zhuce.php?shoujihao=" + shoujihao + "&nicheng=" + nicheng + "&mima=" + mima + "&anquanyouxiang=" + anquanyouxiang + "&userid=" + userid + "&icon=0&guanzhushou=0&beiguanzhushou=0&youjishu=0&rijishou=0");
-                                                            } catch (Exception e) {
-                                                            }
-
-                                                            //注册成功
-                                                            handler.sendEmptyMessageDelayed(3, 0);
-                                                        }
-                                                    }.start();
+                                                    //一切ok
+                                                    //提交验证码
+                                                    SMSSDK.submitVerificationCode("+86", shoujihao, yanzhengma);
                                                 }
                                             }
                                         } else {
-
                                             handler.sendEmptyMessageDelayed(4, 0);
                                         }
                                     }
@@ -164,7 +231,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     public void initsetting() {
-//沉浸模式
+        //沉浸模式
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window window = getWindow();
             // Translucent status bar
@@ -183,14 +250,11 @@ public class RegisterActivity extends AppCompatActivity {
     private void showProgressDialog() {
         if (progDialog == null) {
             MaterialDialog.Builder builder = new MaterialDialog.Builder(this)
-
                     .content("正在注册!")
                     .progress(true, 0);
-
             progDialog = builder.build();
             progDialog.setCancelable(false);
         }
-
         progDialog.show();
     }
 
@@ -217,7 +281,9 @@ public class RegisterActivity extends AppCompatActivity {
                     dissmissProgressDialog();
                     break;
                 case 3:
-//保存到shar           dissmissProgressDialog();
+                    //注册成功
+                    //保存到shar
+                    dissmissProgressDialog();
                     SharedPreferences sharedPreferences = getSharedPreferences("zhanghu", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("shoujihao", shoujihao);
@@ -238,6 +304,18 @@ public class RegisterActivity extends AppCompatActivity {
                 case 4:
                     dissmissProgressDialog();
                     ToastUtil.show(RegisterActivity.this, "获取数据失败！检查网络");
+                    break;
+                case 5:
+                    //倒计时
+                    if (jishi == 0) {
+                        button1.setText("获取");
+                        button1.setEnabled(true);
+                    } else {
+                        button1.setEnabled(false);
+                        button1.setText(Integer.toString(jishi));
+                        jishi = jishi - 1;
+                        handler.sendEmptyMessageDelayed(5, 1000);
+                    }
                     break;
             }
         }

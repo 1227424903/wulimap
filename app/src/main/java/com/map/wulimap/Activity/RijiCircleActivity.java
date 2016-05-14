@@ -31,6 +31,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.andexert.library.RippleView;
 import com.map.wulimap.R;
+import com.map.wulimap.util.Constant;
 import com.map.wulimap.util.DownloadUtil;
 import com.map.wulimap.util.FileUtil;
 import com.map.wulimap.util.HtmlService;
@@ -297,11 +298,8 @@ public class RijiCircleActivity extends AppCompatActivity implements OnDismissCa
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-                                new LoadAndSaveImage(RijiCircleActivity.this, imageview, tupianming + "-yasuo.jpg", "http://wode123123-test.stor.sinaapp.com/" + bianmatupianming + "-yasuo.jpg", "/sdcard/map/");
-                                /*
-                                DownloadUtil down = new DownloadUtil();
-                                down.downloadApk(tupianming + "-yasuo.jpg", "http://wode123123-test.stor.sinaapp.com/" + bianmatupianming + "-yasuo.jpg", "/sdcard/map/");
-                             */
+                                new LoadAndSaveImage(RijiCircleActivity.this, imageview, tupianming + "-yasuo.jpg", Constant.PICTURE_URI + bianmatupianming + "-yasuo.jpg@294w_165h_1l", "/sdcard/map/");
+
                             }
 
 
@@ -321,13 +319,7 @@ public class RijiCircleActivity extends AppCompatActivity implements OnDismissCa
                     swingBottomInAnimationAdapter.setAbsListView(listView);
                     assert swingBottomInAnimationAdapter.getViewAnimator() != null;
                     swingBottomInAnimationAdapter.getViewAnimator().setInitialDelayMillis(300);
-//右边出现动画
-                    // AnimationAdapter mAnimAdapter;
-                    ///  if (!(mAnimAdapter instanceof SwingRightInAnimationAdapter)) {
-                    //    mAnimAdapter = new SwingRightInAnimationAdapter(baseAdapter);
-                    //    mAnimAdapter.setAbsListView(listView);
-                    //    listView.setAdapter(mAnimAdapter);
-                    // }
+
 
 
                     listView.setAdapter(swingBottomInAnimationAdapter);
@@ -393,7 +385,7 @@ public class RijiCircleActivity extends AppCompatActivity implements OnDismissCa
         new Thread() {
             public void run() {
                 try {
-                    wangzhi = HtmlService.getHtml("http://wode123123.sinaapp.com/gushiditu/huoquriji.php");
+                    wangzhi = HtmlService.getHtml(Constant.PHP_URL + "gushiditu/huoquriji.php");
 
                 } catch (Exception e) {
                 }

@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.support.v7.app.AppCompatActivity;
 
 import com.map.wulimap.R;
+import com.map.wulimap.util.Constant;
 import com.map.wulimap.util.DownloadUtil;
 import com.map.wulimap.util.FileUtil;
 import com.map.wulimap.util.HtmlService;
@@ -69,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         new Thread() {
             public void run() {
                 try {
-                    getjieguo1 = HtmlService.getHtml("http://wode123123.sinaapp.com/10.php");
+                    getjieguo1 = HtmlService.getHtml(Constant.PHP_URL + "fengmian.php");
                     getjieguo1 = getjieguo1.trim();
                 } catch (Exception e) {
                 }
@@ -87,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
                         FileUtil.chuanjianmulu("/sdcard/map");
                     }
                     DownloadUtil down = new DownloadUtil();
-                    down.downloadApk("qidong.jpg", "http://1.wode123123.sinaapp.com/photo/" + getjieguo1 + ".jpg", "/sdcard/map/");
+                    down.downloadApk("qidong.jpg", Constant.PHP_URL + "photo/" + getjieguo1 + ".jpg", "/sdcard/map/");
                     editor.putString("fm", getjieguo1);
                     editor.commit();
                 }

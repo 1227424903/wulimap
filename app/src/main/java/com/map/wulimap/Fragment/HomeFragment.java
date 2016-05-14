@@ -65,7 +65,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_my_home, container, false);
         linearLayoutq = (LinearLayout) inflater.inflate(R.layout.riji_password, null);
-        initsetting();
+
         initview();
 
         return view;
@@ -274,19 +274,6 @@ public class HomeFragment extends Fragment {
 
     }
 
-
-    public void initsetting() {
-//沉浸模式
-        /*
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            Window window = getWindow();
-            // Translucent status bar
-            window.setFlags(
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        }
-*/
-    }
 
 
 }

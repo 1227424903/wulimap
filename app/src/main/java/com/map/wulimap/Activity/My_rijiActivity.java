@@ -30,6 +30,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.andexert.library.RippleView;
 import com.map.wulimap.R;
+import com.map.wulimap.util.Constant;
 import com.map.wulimap.util.DownloadUtil;
 import com.map.wulimap.util.HtmlService;
 import com.map.wulimap.util.LoadAndSaveImage;
@@ -297,11 +298,8 @@ public class My_rijiActivity extends AppCompatActivity implements OnDismissCallb
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-                                new LoadAndSaveImage(My_rijiActivity.this, imageview, tupianming + "-yasuo.jpg", "http://wode123123-test.stor.sinaapp.com/" + bianmatupianming + "-yasuo.jpg", "/sdcard/map/");
-                                /*
-                                DownloadUtil down = new DownloadUtil();
-                                down.downloadApk(tupianming + "-yasuo.jpg", "http://wode123123-test.stor.sinaapp.com/" + bianmatupianming + "-yasuo.jpg", "/sdcard/map/");
-                             */
+                                new LoadAndSaveImage(My_rijiActivity.this, imageview, tupianming + "-yasuo.jpg", Constant.PICTURE_URI + bianmatupianming + "-yasuo.jpg@294w_165h_1l", "/sdcard/map/");
+
                             }
 
                             Button button = (Button) linearLayout.findViewById(R.id.guanzhu);
@@ -320,13 +318,7 @@ public class My_rijiActivity extends AppCompatActivity implements OnDismissCallb
                     swingBottomInAnimationAdapter.setAbsListView(listView);
                     assert swingBottomInAnimationAdapter.getViewAnimator() != null;
                     swingBottomInAnimationAdapter.getViewAnimator().setInitialDelayMillis(300);
-//右边出现动画
-                    // AnimationAdapter mAnimAdapter;
-                    ///  if (!(mAnimAdapter instanceof SwingRightInAnimationAdapter)) {
-                    //    mAnimAdapter = new SwingRightInAnimationAdapter(baseAdapter);
-                    //    mAnimAdapter.setAbsListView(listView);
-                    //    listView.setAdapter(mAnimAdapter);
-                    // }
+
                     listView.setAdapter(swingBottomInAnimationAdapter);
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
@@ -383,7 +375,7 @@ public class My_rijiActivity extends AppCompatActivity implements OnDismissCallb
         new Thread() {
             public void run() {
                 try {
-                    getjieguo = HtmlService.getHtml("http://wode123123.sinaapp.com/gushiditu/huoqugerenriji.php?shoujihao=" + shoujihao + "&benren=1");
+                    getjieguo = HtmlService.getHtml(Constant.PHP_URL + "gushiditu/huoqugerenriji.php?shoujihao=" + shoujihao + "&benren=1");
 
                 } catch (Exception e) {
                     handler.sendEmptyMessageDelayed(2, 1000);

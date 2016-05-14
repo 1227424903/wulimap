@@ -16,6 +16,7 @@ import android.widget.EditText;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.andexert.library.RippleView;
 import com.map.wulimap.R;
+import com.map.wulimap.util.Constant;
 import com.map.wulimap.util.HtmlService;
 import com.map.wulimap.util.ToastUtil;
 
@@ -84,7 +85,7 @@ public class ChangePasswprdActivity extends AppCompatActivity {
 
                                     public void run() {
                                         try {
-                                            getjieguo = HtmlService.getHtml("http://wode123123.sinaapp.com/gushiditu/shifouzhuce.php?shoujihao=" + shoujihao + "&nicheng=090g9");
+                                            getjieguo = HtmlService.getHtml(Constant.PHP_URL + "gushiditu/shifouzhuce.php?shoujihao=" + shoujihao + "&nicheng=090g9");
 
                                         } catch (Exception e) {
                                         }
@@ -107,7 +108,7 @@ public class ChangePasswprdActivity extends AppCompatActivity {
                                                                 e.printStackTrace();
                                                             }
 
-                                                            getjieguo = HtmlService.getHtml("http://wode123123.sinaapp.com/gushiditu/denglu.php?shoujihao=" + shoujihao + "&mima=" + jiumima);
+                                                            getjieguo = HtmlService.getHtml(Constant.PHP_URL + "gushiditu/denglu.php?shoujihao=" + shoujihao + "&mima=" + jiumima);
                                                             //删首尾空
                                                             getjieguo = getjieguo.trim();
 
@@ -118,17 +119,13 @@ public class ChangePasswprdActivity extends AppCompatActivity {
                                                             new Thread() {
                                                                 public void run() {
                                                                     try {
-
-
                                                                         //url编码
                                                                         try {
                                                                             xinmima = URLEncoder.encode(xinmima, "utf-8");
                                                                         } catch (Exception e) {
                                                                             e.printStackTrace();
                                                                         }
-
-
-                                                                        HtmlService.getHtml("http://wode123123.sinaapp.com/gushiditu/xiugaimima.php?shoujihao=" + shoujihao + "&mima=" + xinmima);
+                                                                        HtmlService.getHtml(Constant.PHP_URL + "gushiditu/xiugaimima.php?shoujihao=" + shoujihao + "&mima=" + xinmima);
                                                                     } catch (Exception e) {
                                                                     }
                                                                     //修改成功

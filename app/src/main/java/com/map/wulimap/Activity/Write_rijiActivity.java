@@ -35,6 +35,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.alibaba.sdk.android.media.upload.UploadListener;
+import com.alibaba.sdk.android.media.upload.UploadOptions;
+import com.alibaba.sdk.android.media.upload.UploadTask;
+import com.alibaba.sdk.android.media.utils.FailReason;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
@@ -45,9 +49,11 @@ import com.amap.api.maps.MapView;
 import com.amap.api.maps.UiSettings;
 import com.andexert.library.RippleView;
 import com.baidu.speech.VoiceRecognitionService;
+import com.map.wulimap.App;
 import com.map.wulimap.R;
 import com.map.wulimap.util.AMapUtil;
 import com.map.wulimap.util.BaiduyuyingUtil;
+import com.map.wulimap.util.Constant;
 import com.map.wulimap.util.FileUtil;
 import com.map.wulimap.util.GetRoundedBitmapUtil;
 import com.map.wulimap.util.Sdkversionutil;
@@ -252,26 +258,24 @@ public class Write_rijiActivity extends AppCompatActivity implements LocationSou
                         new Thread() {
                             public void run() {
                                 try {
-                                    //上传监听
-                                    UploadUtil uploadUtil = UploadUtil.getInstance();
-                                    uploadUtil.setOnUploadProcessListener(new UploadUtil.OnUploadProcessListener() {
+                                    UploadOptions options = new UploadOptions.Builder()
+                                            .aliases(tupianming + "-yasuo.jpg").build();
+                                    App.mediaService.upload(new File(Environment.getExternalStorageDirectory().getPath() + "/map/" + tupianming + "-yasuo.jpg"), "storymap", options, new UploadListener() {
                                         @Override
-                                        public void onUploadDone(int responseCode, String message) {
+                                        public void onUploading(UploadTask uploadTask) {
+                                        }
+                                        @Override
+                                        public void onUploadFailed(UploadTask uploadTask, FailReason failReason) {
+                                        }
+                                        @Override
+                                        public void onUploadComplete(UploadTask uploadTask) {
                                             handler.sendEmptyMessageDelayed(1, 1000);
                                         }
 
                                         @Override
-                                        public void onUploadProcess(int uploadSize) {
-                                        }
-
-                                        @Override
-                                        public void initUpload(int fileSize) {
+                                        public void onUploadCancelled(UploadTask uploadTask) {
                                         }
                                     });
-                                    //上传
-                                    Map<String, String> map = new HashMap<String, String>();
-                                    map = null;
-                                    uploadUtil.uploadFile(Environment.getExternalStorageDirectory().getPath() + "/map/" + tupianming + "-yasuo.jpg", "myfile", "http://wode123123.sinaapp.com/gushiditu/shangchan.php", map);
                                 } catch (Exception e) {
                                 }
                             }
@@ -535,7 +539,7 @@ public class Write_rijiActivity extends AppCompatActivity implements LocationSou
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-                                HtmlService.getHtml("http://wode123123.sinaapp.com/gushiditu/riji.php?shoujihao=" + shoujihao + "&nicheng=" + nicheng + "&gongxiang=" + gongkai + "&shanchu=0&pinglunshu=0&zanshu=0&didian=" + dizhi + "&jinwei=" + jingweidu + "&tupian=" + tupianming + "&neirong=" + neirong);
+                                HtmlService.getHtml(Constant.PHP_URL + "gushiditu/riji.php?shoujihao=" + shoujihao + "&nicheng=" + nicheng + "&gongxiang=" + gongkai + "&shanchu=0&pinglunshu=0&zanshu=0&didian=" + dizhi + "&jinwei=" + jingweidu + "&tupian=" + tupianming + "&neirong=" + neirong);
                             } catch (Exception e) {
                             }
                         }

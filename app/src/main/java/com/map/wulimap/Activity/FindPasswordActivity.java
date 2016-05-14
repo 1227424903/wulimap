@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -16,19 +18,32 @@ import android.widget.EditText;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.andexert.library.RippleView;
 import com.map.wulimap.R;
+import com.map.wulimap.util.Constant;
 import com.map.wulimap.util.HtmlService;
 import com.map.wulimap.util.ToastUtil;
+
+import java.net.URLEncoder;
+
+import cn.smssdk.EventHandler;
+import cn.smssdk.SMSSDK;
 
 
 public class FindPasswordActivity extends AppCompatActivity {
     //初始化控件
     MaterialDialog progDialog;
     EditText editText;
+    EditText editText1;
+    EditText editText2;
     Button button;
+    Button button1;
+    EditText editText6;
     //初始化变量
     String getjieguo;
-    String wangzhi;
     String shoujihao;
+    String mima1;
+    String mima2;
+    String yanzhengma;
+    int jishi = 60;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +51,41 @@ public class FindPasswordActivity extends AppCompatActivity {
         setContentView(R.layout.content_find_password);
 
         initsetting();
-
         initview();
+//初始化短信
+        SMSSDK.initSDK(this, "12c58839e4a5c", "c51317979cd1eb35bf51e4a556204907");
+        EventHandler eh = new EventHandler() {
+            @Override
+            public void afterEvent(int event, int result, Object data) {
+                if (result == SMSSDK.RESULT_COMPLETE) {
+                    //回调完成
+                    if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
+                        //提交验证码成功  修改
+                        new Thread() {
+                            public void run() {
+                                try {
+                                    HtmlService.getHtml(Constant.PHP_URL + "gushiditu/xiugaimima.php?shoujihao=" + shoujihao + "&mima=" + mima1);
+                                } catch (Exception e) {
+                                }
+                                //修改成功
+                                handler.sendEmptyMessageDelayed(1, 0);
+                            }
+                        }.start();
+
+                    } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
+                        //获取验证码成功  倒计时
+                        ToastUtil.show(FindPasswordActivity.this, "获取成功！请及时输入");
+                        jishi = 60;
+                        handler.sendEmptyMessageDelayed(5, 1000);
+                    } else if (event == SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES) {
+                        //返回支持发送验证码的国家列
+                    }
+                } else {
+                    ((Throwable) data).printStackTrace();
+                }
+            }
+        };
+        SMSSDK.registerEventHandler(eh); //注册短信回调
 
     }
 
@@ -52,14 +100,56 @@ public class FindPasswordActivity extends AppCompatActivity {
             }
 
         });
-
+//手机号监听
         editText = (EditText) findViewById(R.id.shoujihao);
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                shoujihao = editText.getText().toString().trim().replaceAll(" ", "");
+                if (shoujihao.length() == 11) {
+                    button1.setEnabled(true);
+                } else {
+                    button1.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+//获取按钮
+        button1 = (Button) findViewById(R.id.huoqu);
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                shoujihao = editText.getText().toString().trim().replaceAll(" ", "");
+                //空
+                if (shoujihao.equals("") || shoujihao.length() != 11) {
+                    ToastUtil.show(FindPasswordActivity.this, "请输入正确的手机号！");
+                } else {
+                    //获取验证码
+                    SMSSDK.getVerificationCode("+86", shoujihao);
+                }
+            }
+        });
+        editText1 = (EditText) findViewById(R.id.xinmima);
+        editText2 = (EditText) findViewById(R.id.zaicishuru);
+        editText6 = (EditText) findViewById(R.id.yanzhengma);
+//找回密码
         button = (Button) findViewById(R.id.zhaohuimima);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showProgressDialog();
                 shoujihao = editText.getText().toString().trim().replaceAll(" ", "");
+                mima1 = editText1.getText().toString().trim().replaceAll(" ", "");
+                mima2 = editText2.getText().toString().trim().replaceAll(" ", "");
+                yanzhengma = editText6.getText().toString().trim().replaceAll(" ", "");
                 if (shoujihao.equals("") || shoujihao.length() != 11) {
                     dissmissProgressDialog();
                     ToastUtil.show(FindPasswordActivity.this, "请输入正确的手机号！");
@@ -68,8 +158,7 @@ public class FindPasswordActivity extends AppCompatActivity {
 
                         public void run() {
                             try {
-                                getjieguo = HtmlService.getHtml("http://wode123123.sinaapp.com/gushiditu/shifouzhuce.php?shoujihao=" + shoujihao + "&nicheng=090g9");
-
+                                getjieguo = HtmlService.getHtml(Constant.PHP_URL + "gushiditu/shifouzhuce.php?shoujihao=" + shoujihao + "&nicheng=090g9");
                             } catch (Exception e) {
                             }
                             //数据是否获取成功
@@ -77,17 +166,20 @@ public class FindPasswordActivity extends AppCompatActivity {
                                 getjieguo = getjieguo.trim();
                                 //手机号注册过
                                 if (getjieguo.equals("1")) {
-                                    new Thread() {
-                                        public void run() {
-                                            try {
-                                                HtmlService.getHtml("http://wode123123.sinaapp.com/gushiditu/zhaohuimima.php?shoujihao=" + shoujihao);
-                                            } catch (Exception e) {
-                                            }
-                                            // 找回成功
-                                            handler.sendEmptyMessageDelayed(1, 0);
+                                    if (mima1.length() > 5 && mima2.length() > 5 && mima1.equals(mima2)) {
+                                        //url编码
+                                        try {
+                                            mima1 = URLEncoder.encode(mima1, "utf-8");
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
                                         }
-                                    }.start();
-
+                                        //一切ok
+                                        //提交验证码
+                                        SMSSDK.submitVerificationCode("+86", shoujihao, yanzhengma);
+                                    } else {
+                                        //密码不合格
+                                        handler.sendEmptyMessageDelayed(4, 0);
+                                    }
                                 } else {
                                     //手机号未注册过
                                     handler.sendEmptyMessageDelayed(2, 0);
@@ -122,14 +214,11 @@ public class FindPasswordActivity extends AppCompatActivity {
     private void showProgressDialog() {
         if (progDialog == null) {
             MaterialDialog.Builder builder = new MaterialDialog.Builder(this)
-
                     .content("正在找回!")
                     .progress(true, 0);
-
             progDialog = builder.build();
             progDialog.setCancelable(false);
         }
-
         progDialog.show();
     }
 
@@ -149,7 +238,7 @@ public class FindPasswordActivity extends AppCompatActivity {
             switch (msg.what) {
                 case 1:
                     dissmissProgressDialog();
-                    ToastUtil.show(FindPasswordActivity.this, "找回成功！请前往邮箱查看");
+                    ToastUtil.show(FindPasswordActivity.this, "找回成功！");
                     FindPasswordActivity.this.startActivity(new Intent(FindPasswordActivity.this, LoginActivity.class));
                     FindPasswordActivity.this.finish();
                     break;
@@ -160,6 +249,22 @@ public class FindPasswordActivity extends AppCompatActivity {
                 case 3:
                     dissmissProgressDialog();
                     ToastUtil.show(FindPasswordActivity.this, "获取数据失败！检查网络");
+                    break;
+                case 4:
+                    dissmissProgressDialog();
+                    ToastUtil.show(FindPasswordActivity.this, "密码长度最少为6！两次输入需一致");
+                    break;
+                case 5:
+                    //倒计时
+                    if (jishi == 0) {
+                        button1.setText("获取");
+                        button1.setEnabled(true);
+                    } else {
+                        button1.setEnabled(false);
+                        button1.setText(Integer.toString(jishi));
+                        jishi = jishi - 1;
+                        handler.sendEmptyMessageDelayed(5, 1000);
+                    }
                     break;
             }
         }

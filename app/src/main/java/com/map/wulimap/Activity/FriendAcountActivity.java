@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.andexert.library.RippleView;
 import com.map.wulimap.R;
+import com.map.wulimap.util.Constant;
 import com.map.wulimap.util.ToastUtil;
 import com.map.wulimap.util.HtmlService;
 
@@ -152,7 +153,7 @@ public class FriendAcountActivity extends AppCompatActivity {
                                 e.printStackTrace();
                             }
 
-                            getjieguo = HtmlService.getHtml("http://wode123123.sinaapp.com/gushiditu/guanzhu.php?shoujihao=" + shoujihao1 + "&shoujihao1=" + shoujihao + "&nicheng=" + nicheng11 + "&nicheng1=" + nichengg + "&shanchu=0");
+                            getjieguo = HtmlService.getHtml(Constant.PHP_URL + "gushiditu/guanzhu.php?shoujihao=" + shoujihao1 + "&shoujihao1=" + shoujihao + "&nicheng=" + nicheng11 + "&nicheng1=" + nichengg + "&shanchu=0");
                             //删首尾空
                             getjieguo = getjieguo.trim();
                         } catch (Exception e) {
@@ -210,7 +211,7 @@ public class FriendAcountActivity extends AppCompatActivity {
                 String shoujihao1 = sharedPreferences.getString("shoujihao", null);
                 //关注者
                 try {
-                    getjieguo = HtmlService.getHtml("http://wode123123.sinaapp.com/gushiditu/huoquguanzhuren.php?shoujihao=" + shoujihao1);
+                    getjieguo = HtmlService.getHtml(Constant.PHP_URL + "gushiditu/huoquguanzhuren.php?shoujihao=" + shoujihao1);
                 } catch (Exception e) {
                 }
 

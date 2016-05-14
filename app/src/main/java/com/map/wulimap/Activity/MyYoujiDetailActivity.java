@@ -29,6 +29,7 @@ import com.andexert.library.RippleView;
 import com.cocosw.bottomsheet.BottomSheet;
 import com.map.wulimap.listener.QQShareListener;
 import com.map.wulimap.R;
+import com.map.wulimap.util.Constant;
 import com.map.wulimap.util.GetRoundedBitmapUtil;
 import com.map.wulimap.util.LoadAndSaveImage;
 import com.map.wulimap.util.ToastUtil;
@@ -122,18 +123,15 @@ public class MyYoujiDetailActivity extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            new LoadAndSaveImage(MyYoujiDetailActivity.this, imageView, tupian + "-yasuo.jpg", "http://wode123123-test.stor.sinaapp.com/" + tupianbianmaming + "-yasuo.jpg", "/sdcard/map/");
-                                /*
-                                DownloadUtil down = new DownloadUtil();
-                                down.downloadApk(tupianming + "-yasuo.jpg", "http://wode123123-test.stor.sinaapp.com/" + bianmatupianming + "-yasuo.jpg", "/sdcard/map/");
-                             */
+            new LoadAndSaveImage(MyYoujiDetailActivity.this, imageView, tupian + "-yasuo.jpg", Constant.PICTURE_URI + tupianbianmaming + "-yasuo.jpg@294w_165h_1l", "/sdcard/map/");
+
         }
 
 //图片详情按钮
         imageView.setOnClickListener(new View.OnClickListener() { // 点击放大
             public void onClick(View paramView) {
                 Uri uri;
-                uri = Uri.parse("http://wode123123-test.stor.sinaapp.com/" + tupianbianmaming + "-yasuo.jpg");
+                uri = Uri.parse(Constant.PICTURE_URI + tupianbianmaming + "-yasuo.jpg");
                 Log.e("uri", uri.toString());
                 Intent intent = new Intent(MyYoujiDetailActivity.this, PhotoActivity.class);
                 intent.putExtra("photo", uri);
@@ -175,7 +173,7 @@ public class MyYoujiDetailActivity extends AppCompatActivity {
                                                     public void run() {
 
                                                         try {
-                                                            getjieguo = HtmlService.getHtml("http://wode123123.sinaapp.com/gushiditu/shanchuyouji.php?youjiid=" + youjiid + "&shoujihao=" + shoujihao + "&shanchu=1");
+                                                            getjieguo = HtmlService.getHtml(Constant.PHP_URL + "gushiditu/shanchuyouji.php?youjiid=" + youjiid + "&shoujihao=" + shoujihao + "&shanchu=1");
                                                             //删首尾空
                                                             getjieguo = getjieguo.trim();
                                                         } catch (Exception e) {
@@ -244,8 +242,8 @@ public class MyYoujiDetailActivity extends AppCompatActivity {
                                 params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);
                                 params.putString(QQShare.SHARE_TO_QQ_TITLE, "游记分享");
                                 params.putString(QQShare.SHARE_TO_QQ_SUMMARY, nicheng + "\n" + "\n" + shijian);
-                                params.putString(QQShare.SHARE_TO_QQ_TARGET_URL, "http://wode123123.sinaapp.com/wangye/fenxiang.php?ku=youji&id=" + youjiid);
-                                params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, "http://1.wode123123.sinaapp.com/photo/egl.png");
+                                params.putString(QQShare.SHARE_TO_QQ_TARGET_URL, Constant.PHP_URL + "wangye/fenxiang.php?ku=youji&id=" + youjiid);
+                                params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, Constant.PHP_URL + "photo/egl.png");
                                 mTencent.shareToQQ(MyYoujiDetailActivity.this, params, myListener);
                                 break;
                             case R.id.QQZONE:
@@ -253,14 +251,14 @@ public class MyYoujiDetailActivity extends AppCompatActivity {
                                 params1.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);
                                 params1.putString(QQShare.SHARE_TO_QQ_TITLE, "游记分享");
                                 params1.putString(QQShare.SHARE_TO_QQ_SUMMARY, nicheng + "\n" + "\n" + shijian);
-                                params1.putString(QQShare.SHARE_TO_QQ_TARGET_URL, "http://wode123123.sinaapp.com/wangye/fenxiang.php?ku=youji&id=" + youjiid);
-                                params1.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, "http://1.wode123123.sinaapp.com/photo/egl11.png");
+                                params1.putString(QQShare.SHARE_TO_QQ_TARGET_URL, Constant.PHP_URL + "wangye/fenxiang.php?ku=youji&id=" + youjiid);
+                                params1.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, Constant.PHP_URL + "photo/egl11.png");
                                 params1.putInt(QQShare.SHARE_TO_QQ_EXT_INT, QQShare.SHARE_TO_QQ_FLAG_QZONE_AUTO_OPEN);
                                 mTencent.shareToQQ(MyYoujiDetailActivity.this, params1, myListener);
                                 break;
                             case R.id.PENGYOUQUAN:
                                 WXWebpageObject webpage = new WXWebpageObject();
-                                webpage.webpageUrl = "http://wode123123.sinaapp.com/wangye/fenxiang.php?ku=youji&id=" + youjiid;
+                                webpage.webpageUrl = Constant.PHP_URL + "wangye/fenxiang.php?ku=youji&id=" + youjiid;
                                 WXMediaMessage msg = new WXMediaMessage(webpage);
                                 msg.title = "游记分享";
                                 msg.description = nicheng + "\n\n" + shijian;
@@ -275,7 +273,7 @@ public class MyYoujiDetailActivity extends AppCompatActivity {
                                 break;
                             case R.id.WEIXIN:
                                 WXWebpageObject webpage1 = new WXWebpageObject();
-                                webpage1.webpageUrl = "http://wode123123.sinaapp.com/wangye/fenxiang.php?ku=youji&id=" + youjiid;
+                                webpage1.webpageUrl = Constant.PHP_URL + "wangye/fenxiang.php?ku=youji&id=" + youjiid;
                                 WXMediaMessage msg1 = new WXMediaMessage(webpage1);
                                 msg1.title = "游记分享";
                                 msg1.description = nicheng + "\n\n" + shijian;
@@ -290,7 +288,7 @@ public class MyYoujiDetailActivity extends AppCompatActivity {
                                 break;
                             case R.id.yulan:
                                 Bundle bundle = new Bundle();
-                                bundle.putString("wangzhi", "http://wode123123.sinaapp.com/wangye/fenxiang.php?ku=youji&id=" + youjiid);
+                                bundle.putString("wangzhi", Constant.PHP_URL + "wangye/fenxiang.php?ku=youji&id=" + youjiid);
                                 bundle.putString("biaoti", "故事地图-游记分享");
                                 Intent intent = new Intent(MyYoujiDetailActivity.this, WebActivity.class);
                                 intent.putExtras(bundle);
@@ -371,7 +369,7 @@ public class MyYoujiDetailActivity extends AppCompatActivity {
                 if (Integer.parseInt(zanshu) == 0) {
                 } else {
                     try {
-                        getjieguo = HtmlService.getHtml("http://wode123123.sinaapp.com/gushiditu/huoquyoujizan.php?youjiid=" + youjiid);
+                        getjieguo = HtmlService.getHtml(Constant.PHP_URL + "gushiditu/huoquyoujizan.php?youjiid=" + youjiid);
 
 
                     } catch (Exception e) {
@@ -408,7 +406,7 @@ public class MyYoujiDetailActivity extends AppCompatActivity {
                 if (Integer.parseInt(pinglunshu) == 0) {
                 } else {
                     try {
-                        getjieguo = HtmlService.getHtml("http://wode123123.sinaapp.com/gushiditu/huoquyoujipinglun.php?youjiid=" + youjiid);
+                        getjieguo = HtmlService.getHtml(Constant.PHP_URL + "gushiditu/huoquyoujipinglun.php?youjiid=" + youjiid);
                     } catch (Exception e) {
                         //网络异常
                         handler.sendEmptyMessageDelayed(2, 1000);

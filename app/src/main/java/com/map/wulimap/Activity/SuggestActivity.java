@@ -23,6 +23,7 @@ import com.andexert.library.RippleView;
 import com.cocosw.bottomsheet.BottomSheet;
 import com.map.wulimap.listener.QQShareListener;
 import com.map.wulimap.R;
+import com.map.wulimap.util.Constant;
 import com.map.wulimap.util.GetRoundedBitmapUtil;
 import com.map.wulimap.util.ToastUtil;
 import com.map.wulimap.util.HtmlService;
@@ -97,7 +98,7 @@ public class SuggestActivity extends AppCompatActivity {
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-                                HtmlService.getHtml("http://wode123123.sinaapp.com/gushiditu/huifu.php?shoujihao=" + shoujihao1 + "&neirong=" + pinglunneirong1);
+                                HtmlService.getHtml(Constant.PHP_URL + "gushiditu/huifu.php?shoujihao=" + shoujihao1 + "&neirong=" + pinglunneirong1);
                             } catch (Exception e) {
                             }
                             handler.sendEmptyMessageDelayed(3, 1000);
@@ -132,7 +133,7 @@ public class SuggestActivity extends AppCompatActivity {
                                 params.putString(QQShare.SHARE_TO_QQ_TITLE, "故事地图");
                                 params.putString(QQShare.SHARE_TO_QQ_SUMMARY, "好玩的游记\n" + "\n" + "都在这里");
                                 params.putString(QQShare.SHARE_TO_QQ_TARGET_URL, "http://a.app.qq.com/o/simple.jsp?pkgname=com.map.wulimap");
-                                params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, "http://1.wode123123.sinaapp.com/photo/egl.png");
+                                params.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, Constant.PHP_URL + "photo/egl.png");
                                 mTencent.shareToQQ(SuggestActivity.this, params, myListener);
                                 break;
                             case R.id.QQZONE:
@@ -141,7 +142,7 @@ public class SuggestActivity extends AppCompatActivity {
                                 params1.putString(QQShare.SHARE_TO_QQ_TITLE, "故事地图");
                                 params1.putString(QQShare.SHARE_TO_QQ_SUMMARY, "好玩的游记\n" + "\n" + "都在这里");
                                 params1.putString(QQShare.SHARE_TO_QQ_TARGET_URL, "http://a.app.qq.com/o/simple.jsp?pkgname=com.map.wulimap");
-                                params1.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, "http://1.wode123123.sinaapp.com/photo/egl11.png");
+                                params1.putString(QQShare.SHARE_TO_QQ_IMAGE_URL, Constant.PHP_URL + "photo/egl11.png");
                                 params1.putInt(QQShare.SHARE_TO_QQ_EXT_INT, QQShare.SHARE_TO_QQ_FLAG_QZONE_AUTO_OPEN);
                                 mTencent.shareToQQ(SuggestActivity.this, params1, myListener);
                                 break;

@@ -25,6 +25,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.andexert.library.RippleView;
+import com.map.wulimap.util.Constant;
 import com.map.wulimap.util.HtmlService;
 import com.map.wulimap.R;
 import com.map.wulimap.view.RefreshLayout;
@@ -99,7 +100,7 @@ public class FocusOnMeActivity extends AppCompatActivity {
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(android.R.color.holo_blue_bright),
                 getResources().getColor(android.R.color.holo_orange_light),
                 getResources().getColor(android.R.color.holo_green_light));
-        //下拉刷新监听
+//下拉刷新监听
         swipeRefreshLayout.setOnRefreshListener(
                 new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
@@ -271,11 +272,7 @@ public class FocusOnMeActivity extends AppCompatActivity {
                             return linearLayout;
                         }
                     };
-                    //下面出现动画
-                    //SwingBottomInAnimationAdapter swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(new SwipeDismissAdapter(baseAdapter,PopActivity.this));
-                    // swingBottomInAnimationAdapter.setAbsListView(listView);
-                    // assert swingBottomInAnimationAdapter.getViewAnimator() != null;
-                    // swingBottomInAnimationAdapter.getViewAnimator().setInitialDelayMillis(300);
+
                     //右边出现动画
                     if (!(mAnimAdapter instanceof SwingRightInAnimationAdapter)) {
                         mAnimAdapter = new SwingRightInAnimationAdapter(baseAdapter);
@@ -301,7 +298,7 @@ public class FocusOnMeActivity extends AppCompatActivity {
                                 @Override
                                 public void run() {
                                     try {
-                                        getjieguo = HtmlService.getHtml("http://wode123123.sinaapp.com/gushiditu/nichengsousu.php?nicheng=" + bianmanicheng);
+                                        getjieguo = HtmlService.getHtml(Constant.PHP_URL + "gushiditu/nichengsousu.php?nicheng=" + bianmanicheng);
                                     } catch (Exception e) {
                                     }
                                     //删首尾空
@@ -381,7 +378,7 @@ public class FocusOnMeActivity extends AppCompatActivity {
         new Thread() {
             public void run() {
                 try {
-                    getjieguo = HtmlService.getHtml("http://wode123123.sinaapp.com/gushiditu/huoqubeiguanzhuren.php?nicheng=" + bianmanicheng1);
+                    getjieguo = HtmlService.getHtml(Constant.PHP_URL + "gushiditu/huoqubeiguanzhuren.php?nicheng=" + bianmanicheng1);
                 } catch (Exception e) {
                 }
                 if (!(getjieguo == null || getjieguo == "")) {

@@ -72,5 +72,6 @@
     <string name="title_activity_sub_conversation_list_activtiy">SubConversationListActivtiy
     </string>
     <string name="title_activity_conversation">ConversationActivity</string>
+    <string name="title_activity_more">MoreActivity</string>
 
 </resources>

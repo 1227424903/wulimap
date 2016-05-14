@@ -31,6 +31,7 @@ import com.andexert.library.RippleView;
 import com.map.wulimap.Activity.RijiCircleActivity;
 import com.map.wulimap.Activity.RijiDetailActivity;
 import com.map.wulimap.R;
+import com.map.wulimap.util.Constant;
 import com.map.wulimap.util.DownloadUtil;
 import com.map.wulimap.util.FileUtil;
 import com.map.wulimap.util.HtmlService;
@@ -62,7 +63,6 @@ public class RijiFragment extends Fragment implements OnDismissCallback {
     int zongshu;
     int biaoji = 0;
     String wangzhi;
-    String shanchuyoujiid;
     String tupianming;
     String getjieguo;
     String bianmatupianming;
@@ -91,7 +91,6 @@ public class RijiFragment extends Fragment implements OnDismissCallback {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_focus_riji, container, false);
 
-        initsetting();
         initdate();
         initview();
 
@@ -132,18 +131,6 @@ public class RijiFragment extends Fragment implements OnDismissCallback {
     }
 
 
-    public void initsetting() {
-        /*
-//沉浸模式
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            Window window = getWindow();
-            // Translucent status bar
-            window.setFlags(
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        }
-        */
-    }
 
 
     public void initdate() {
@@ -352,11 +339,8 @@ public class RijiFragment extends Fragment implements OnDismissCallback {
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-                                new LoadAndSaveImage(context1, imageview, tupianming + "-yasuo.jpg", "http://wode123123-test.stor.sinaapp.com/" + bianmatupianming + "-yasuo.jpg", "/sdcard/map/");
-                                /*
-                                DownloadUtil down = new DownloadUtil();
-                                down.downloadApk(tupianming + "-yasuo.jpg", "http://wode123123-test.stor.sinaapp.com/" + bianmatupianming + "-yasuo.jpg", "/sdcard/map/");
-                             */
+                                new LoadAndSaveImage(context1, imageview, tupianming + "-yasuo.jpg", Constant.PICTURE_URI + bianmatupianming + "-yasuo.jpg@294w_165h_1l", "/sdcard/map/");
+
                             }
 
                             TextView textView4 = (TextView) linearLayout.findViewById(R.id.zanshu);
@@ -374,13 +358,7 @@ public class RijiFragment extends Fragment implements OnDismissCallback {
                     swingBottomInAnimationAdapter.setAbsListView(listView);
                     assert swingBottomInAnimationAdapter.getViewAnimator() != null;
                     swingBottomInAnimationAdapter.getViewAnimator().setInitialDelayMillis(300);
-//右边出现动画
-                    // AnimationAdapter mAnimAdapter;
-                    ///  if (!(mAnimAdapter instanceof SwingRightInAnimationAdapter)) {
-                    //    mAnimAdapter = new SwingRightInAnimationAdapter(baseAdapter);
-                    //    mAnimAdapter.setAbsListView(listView);
-                    //    listView.setAdapter(mAnimAdapter);
-                    // }
+
 
 
                     listView.setAdapter(swingBottomInAnimationAdapter);
@@ -427,27 +405,13 @@ public class RijiFragment extends Fragment implements OnDismissCallback {
     };
 
 
-    //Activity返回结果
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        super.onActivityResult(requestCode, resultCode, intent);
-        if (requestCode == 0 && resultCode == 0) {
-            Bundle date = intent.getExtras();
-            shanchuyoujiid = date.getString("keyword");
-            if (shanchuyoujiid.equals("")) {
-                huoqushuju();
-            }
-
-        }
-    }
-
 
     //获取数据
     public void huoqushuju() {
         new Thread() {
             public void run() {
                 try {
-                    getjieguo = HtmlService.getHtml("http://wode123123.sinaapp.com/gushiditu/huoquguanzhuren.php?shoujihao=" + shoujihao);
+                    getjieguo = HtmlService.getHtml(Constant.PHP_URL + "gushiditu/huoquguanzhuren.php?shoujihao=" + shoujihao);
                 } catch (Exception e) {
                 }
                 if (!(getjieguo == null || getjieguo == "")) {
@@ -462,7 +426,7 @@ public class RijiFragment extends Fragment implements OnDismissCallback {
                         } catch (JSONException ex) {
                         }
                         try {
-                            wangzhi = HtmlService.getHtml("http://wode123123.sinaapp.com/gushiditu/huoquriji.php");
+                            wangzhi = HtmlService.getHtml(Constant.PHP_URL + "gushiditu/huoquriji.php");
 
                         } catch (Exception e) {
                         }

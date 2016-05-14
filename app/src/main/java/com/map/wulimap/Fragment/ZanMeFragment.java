@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.andexert.library.RippleView;
 import com.map.wulimap.R;
+import com.map.wulimap.util.Constant;
 import com.map.wulimap.util.HtmlService;
 import com.map.wulimap.util.ToastUtil;
 import com.map.wulimap.view.RefreshLayout;
@@ -137,7 +138,7 @@ public class ZanMeFragment extends Fragment {
                 getResources().getColor(android.R.color.holo_orange_light),
                 getResources().getColor(android.R.color.holo_green_light));
 
-        //下拉刷新监听
+//下拉刷新监听
         swipeRefreshLayout.setOnRefreshListener(
                 new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
@@ -157,7 +158,10 @@ public class ZanMeFragment extends Fragment {
             public void run() {
                 swipeRefreshLayout.setRefreshing(false);
             }
-        }, 1500);
+        }, 1000);
+
+
+
 //加载更多
         swipeRefreshLayout.setOnLoadListener(new RefreshLayout.OnLoadListener() {
             @Override
@@ -259,17 +263,14 @@ public class ZanMeFragment extends Fragment {
                                 return zongshu;
                             }
                         }
-
                         @Override
                         public Object getItem(int i) {
                             return null;
                         }
-
                         @Override
                         public long getItemId(int i) {
                             return i;
                         }
-
                         @Override
                         public View getView(int i, View view, ViewGroup viewGroup) {
                             int j = zongshu - 1 - i;
@@ -280,16 +281,11 @@ public class ZanMeFragment extends Fragment {
                             textView.setText(sharedPreferences.getString("nicheng" + j, null));
                             TextView textView1 = (TextView) linearLayout.findViewById(R.id.pinglunshujian);
                             textView1.setText(sharedPreferences.getString("shijian" + j, null));
-
                             return linearLayout;
                         }
                     };
-                    //下面出现动画
-                    // SwingBottomInAnimationAdapter swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(new SwipeDismissAdapter(baseAdapter,PopActivity.this));
-                    // swingBottomInAnimationAdapter.setAbsListView(listView);
-                    // assert swingBottomInAnimationAdapter.getViewAnimator() != null;
-                    //  swingBottomInAnimationAdapter.getViewAnimator().setInitialDelayMillis(300);
-//右边出现动画
+
+                    //右边出现动画
 
                     if (!(mAnimAdapter instanceof SwingRightInAnimationAdapter)) {
                         mAnimAdapter = new SwingRightInAnimationAdapter(baseAdapter);
@@ -297,15 +293,12 @@ public class ZanMeFragment extends Fragment {
                         listView.setAdapter(mAnimAdapter);
                     }
 
-
                     break;
                 case 2:
                     ToastUtil.show(context1, "获取数据失败！检查网络");
-
                     break;
                 case 3:
                     ToastUtil.show(context1, "还没有消息！");
-
                     listView.setBackground(getResources().getDrawable(R.drawable.icon_no_news));
                     break;
                 case 4:
@@ -322,7 +315,7 @@ public class ZanMeFragment extends Fragment {
         new Thread() {
             public void run() {
                 try {
-                    getjieguo = HtmlService.getHtml("http://wode123123.sinaapp.com/gushiditu/zanwoyouji.php?shoujihao=" + shoujihao);
+                    getjieguo = HtmlService.getHtml(Constant.PHP_URL + "gushiditu/zanwoyouji.php?shoujihao=" + shoujihao);
                 } catch (Exception e) {
                 }
 

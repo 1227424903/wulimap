@@ -26,6 +26,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.andexert.library.RippleView;
 import com.map.wulimap.R;
+import com.map.wulimap.util.Constant;
 import com.map.wulimap.util.HtmlService;
 import com.map.wulimap.util.ToastUtil;
 import com.map.wulimap.view.RefreshLayout;
@@ -255,11 +256,7 @@ public class NoticeActivity extends AppCompatActivity {
                             return linearLayout;
                         }
                     };
-                    //下面出现动画
-                    // SwingBottomInAnimationAdapter swingBottomInAnimationAdapter = new SwingBottomInAnimationAdapter(new SwipeDismissAdapter(baseAdapter,PopActivity.this));
-                    // swingBottomInAnimationAdapter.setAbsListView(listView);
-                    // assert swingBottomInAnimationAdapter.getViewAnimator() != null;
-                    //  swingBottomInAnimationAdapter.getViewAnimator().setInitialDelayMillis(300);
+
 //右边出现动画
 
                     if (!(mAnimAdapter instanceof SwingRightInAnimationAdapter)) {
@@ -329,7 +326,7 @@ public class NoticeActivity extends AppCompatActivity {
         new Thread() {
             public void run() {
                 try {
-                    getjieguo = HtmlService.getHtml("http://wode123123.sinaapp.com/gushiditu/huoquxitongxiaoxi.php");
+                    getjieguo = HtmlService.getHtml(Constant.PHP_URL + "gushiditu/huoquxitongxiaoxi.php");
                 } catch (Exception e) {
                 }
 

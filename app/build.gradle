@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.map.wulimap"
-        minSdkVersion 14
+        minSdkVersion 16
         targetSdkVersion 22
         versionCode 4
         versionName "4.0"
@@ -21,7 +21,11 @@ android {
 }
 
 
-
+repositories {
+    flatDir {
+        dirs 'libs' //就是你放aar的目录地址
+    }
+}
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -46,4 +50,8 @@ dependencies {
     }
     compile 'com.kyleduo.switchbutton:library:1.4.0'
     compile project(':IMKit')
+    compile project(':OneSDK')
+    compile files('libs/MobCommons-2016.0303.1229.jar')
+    compile name: 'SMSSDK-2.0.2', ext: 'aar'
+
 }

@@ -31,6 +31,7 @@ import com.map.wulimap.Fragment.RijiFragment;
 import com.map.wulimap.Fragment.YoujiFragment;
 import com.map.wulimap.R;
 import com.map.wulimap.listener.ConversationBehaviorListener;
+import com.map.wulimap.util.Constant;
 import com.map.wulimap.util.HtmlService;
 import com.map.wulimap.util.ToastUtil;
 import com.umeng.update.UmengUpdateAgent;
@@ -332,7 +333,7 @@ public class HomeActivity extends AppCompatActivity
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    getjieguo = HtmlService.getHtml("http://wode123123.sinaapp.com/gushiditu/gettoken.php?shoujihao=" + userid + "&nicheng=" + nicheng);
+                    getjieguo = HtmlService.getHtml(Constant.PHP_URL + "gushiditu/gettoken.php?shoujihao=" + userid + "&nicheng=" + nicheng);
                 } catch (Exception e) {
                 }
                 //删首尾空
@@ -444,9 +445,9 @@ public class HomeActivity extends AppCompatActivity
     //获取用户信息
     public UserInfo findUserById(final String userId) {
         String name = "未知";
-        String icon = "http://1.wode123123.sinaapp.com/photo/egl11.png";
+        String icon = Constant.PHP_URL + "photo/egl11.png";
         try {
-            getjieguo = HtmlService.getHtml("http://wode123123.sinaapp.com/gushiditu/getuseinfo.php?userid=" + userId);
+            getjieguo = HtmlService.getHtml(Constant.PHP_URL + "gushiditu/getuseinfo.php?userid=" + userId);
         } catch (Exception e) {
         }
         //删首尾空

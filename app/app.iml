@@ -71,6 +71,7 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/dependency-cache" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/dex" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/dex-cache" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/SMSSDK-2.0.2/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.3.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/design/23.2.0/jars" />
@@ -118,13 +119,17 @@
     <orderEntry type="library" exported="" name="open_sdk_r5509" level="project" />
     <orderEntry type="library" exported="" name="AMap_3DMap_V3.2.1_20160225" level="project" />
     <orderEntry type="library" exported="" name="core-0.8.5.8" level="project" />
+    <orderEntry type="library" exported="" name="MobCommons-2016.0303.1229" level="project" />
     <orderEntry type="library" exported="" name="mta-sdk-1.6.2" level="project" />
     <orderEntry type="library" exported="" name="AMap_Location_v2.3.0_20160112" level="project" />
     <orderEntry type="library" exported="" name="design-23.2.0" level="project" />
+    <orderEntry type="library" exported="" name="SMSSDK-2.0.2-" level="project" />
     <orderEntry type="library" exported="" name="umeng-update-v2.6.0.1" level="project" />
     <orderEntry type="library" exported="" name="library-1.3" level="project" />
     <orderEntry type="library" exported="" name="listviewanimations_lib-core_3.1.0" level="project" />
     <orderEntry type="library" exported="" name="listviewanimations_lib-manipulation_3.1.0" level="project" />
+    <orderEntry type="library" exported="" name="MobTools-2016.0303.1229" level="project" />
     <orderEntry type="module" module-name="IMKit" exported="" />
+    <orderEntry type="module" module-name="OneSDK" exported="" />
   </component>
 </module>
