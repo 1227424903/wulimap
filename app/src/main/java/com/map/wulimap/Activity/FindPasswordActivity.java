@@ -74,7 +74,7 @@ public class FindPasswordActivity extends AppCompatActivity {
 
                     } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
                         //获取验证码成功  倒计时
-                        ToastUtil.show(FindPasswordActivity.this, "获取成功！请及时输入");
+
                         jishi = 60;
                         handler.sendEmptyMessageDelayed(5, 1000);
                     } else if (event == SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES) {
@@ -260,6 +260,9 @@ public class FindPasswordActivity extends AppCompatActivity {
                         button1.setText("获取");
                         button1.setEnabled(true);
                     } else {
+                        if (jishi == 60) {
+                            ToastUtil.show(FindPasswordActivity.this, "获取成功！请及时输入");
+                        }
                         button1.setEnabled(false);
                         button1.setText(Integer.toString(jishi));
                         jishi = jishi - 1;
