@@ -18,5 +18,6 @@ public class Constant {
     public static final String EXTRA_LICENSE_FILE_PATH = "license-file-path";
     public static final String EXTRA_OFFLINE_LM_RES_FILE_PATH = "lm-res-file-path";
     public static final String EXTRA_OFFLINE_SLOT_DATA = "slot-data";
-
+    public static final String PICTURE_URI = "http://storymap.image.alimmdn.com/";
+    public static final String PHP_URL = "http://123.206.86.227/";
 }
